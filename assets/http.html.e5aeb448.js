@@ -1,0 +1,1 @@
+const t={key:"v-239652cc",path:"/base/http.html",title:"HTTP \u7CFB\u5217",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1680088688e3,contributors:[{name:"RhysZhao",email:"1009282428@qq.com",commits:1}]},filePathRelative:"base/http.md"};export{t as data};

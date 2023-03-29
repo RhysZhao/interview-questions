@@ -1,0 +1,1 @@
+const e={key:"v-fbd6e428",path:"/base/design-mode.html",title:"\u8BBE\u8BA1\u6A21\u5F0F",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1680088688e3,contributors:[{name:"RhysZhao",email:"1009282428@qq.com",commits:1}]},filePathRelative:"base/design-mode.md"};export{e as data};
