@@ -1,1 +1,0 @@
-const e={key:"v-15e77d9f",path:"/base/operation-system.html",title:"\u64CD\u4F5C\u7CFB\u7EDF",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1680088688e3,contributors:[{name:"RhysZhao",email:"1009282428@qq.com",commits:1}]},filePathRelative:"base/operation-system.md"};export{e as data};

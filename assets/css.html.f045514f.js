@@ -1,1 +1,0 @@
-const t={key:"v-80c5304a",path:"/base/css.html",title:"CSS",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1680088688e3,contributors:[{name:"RhysZhao",email:"1009282428@qq.com",commits:1}]},filePathRelative:"base/css.md"};export{t as data};

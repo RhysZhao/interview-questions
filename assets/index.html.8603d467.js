@@ -1,0 +1,1 @@
+import{_ as e,o as a,c as t,b as r,a as c}from"./app.572dc05b.js";const o={},s={id:"\u9762\u8BD5\u6280\u5DE7",tabindex:"-1"},n=c("a",{class:"header-anchor",href:"#\u9762\u8BD5\u6280\u5DE7","aria-hidden":"true"},"#",-1);function _(d,i){return a(),t("h1",s,[n,r(" \u9762\u8BD5\u6280\u5DE7")])}var f=e(o,[["render",_],["__file","index.html.vue"]]);export{f as default};

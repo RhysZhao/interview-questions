@@ -1,0 +1,1 @@
+const t={key:"v-d820d792",path:"/skill/",title:"\u9762\u8BD5\u6280\u5DE7",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:168014083e4,contributors:[{name:"RhysZhao",email:"1009282428@qq.com",commits:1}]},filePathRelative:"skill/README.md"};export{t as data};
