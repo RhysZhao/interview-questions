@@ -2,7 +2,7 @@
  * Author  rhys.zhao
  * Date  2023-03-02 14:02:43
  * LastEditors  rhys.zhao
- * LastEditTime  2023-03-29 16:09:29
+ * LastEditTime  2023-03-30 09:44:55
  * Description
  */
 
@@ -29,12 +29,16 @@ module.exports = {
     search: true,
     navbar: [
       {
-        text: '😶‍🌫️ 前端基础',
+        text: '🪛 前端基础',
         link: '/base/'
       },
       {
-        text: '😶‍🌫️ 前端进阶',
+        text: '🪜 前端进阶',
         link: '/senior/'
+      },
+      {
+        text: '🗡️ 面试技巧',
+        link: '/skill/'
       }
     ],
     sidebar: {
@@ -44,6 +48,7 @@ module.exports = {
           children: [
             '/base/README.md',
             '/base/js.md',
+            '/base/es6.md',
             '/base/css.md',
             '/base/http.md',
             '/base/react.md',
@@ -59,6 +64,12 @@ module.exports = {
         {
           text: '前端进阶',
           children: ['/senior/README.md']
+        }
+      ],
+      '/skill/': [
+        {
+          text: '面试技巧',
+          children: ['/skill/README.md']
         }
       ]
     }
