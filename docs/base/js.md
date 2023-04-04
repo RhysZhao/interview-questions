@@ -27,7 +27,7 @@ Object.prototype.toString.call(new Date()) // [object Date]
 Object.prototype.toString.call(() => {})) // [object Function]
 ```
 
-## 2. JavScript 数组的常用方法有哪些？
+## 2. JavaScript 数组的常用方法有哪些？
 
 - 增：
 
@@ -206,6 +206,26 @@ console.log(strArr);
 
 ## 4. 谈谈 JavaScript 中的类型转换机制
 
+JavaScript 中的类型转换可以分为**显式类型转换**和**隐式类型转换**。
+
+显式类型转换：使用 `Number()`, `String()`, `Boolean()`, `parseInt()`, `parseFloat()`这种显示转换函数
+
+隐式类型转换：不需要显示调用函数。比如 `!!'test'`, `+'22'`。
+
+JavaScript 中的类型转换规则如下：
+
+1. 字符串转换为数字：可以使用 Number() 函数将字符串转换为数字类型，如果字符串不能转换为数字，则返回 NaN。
+
+2. 数字转换为字符串：可以使用 String() 函数将数字转换为字符串类型。
+
+3. 布尔值转换为数字：true 转换为 1，false 转换为 0。
+
+4. 数字转换为布尔值：0、NaN 和空字符串转换为 false，其他数字转换为 true。
+
+5. 对象转换为原始值：对象转换为原始值时，会调用对象的 `valueOf()` 和 `toString()` 方法，如果这两个方法都不存在或者返回的值不能转换为原始值，则会抛出 TypeError 异常。
+
+原始值转换为对象：可以使用对应的包装对象将原始值转换为对象类型，比如 使用 `new Number(10)` 将数字 10 转换为 Number 对象。
+
 ## 5. == 、 === 和 `Object.is()`三者的区别，分别在什么情况使用？
 
 == 在比较中会先进行类型转换，再确定操作数是否相等。分以下几种情况：
@@ -218,9 +238,9 @@ console.log(strArr);
 '1' == true; // true
 ```
 
-- 简单类型与引用类型比较，对象转化成其原始类型的值通过 `valueOf` 函数，再比较
+- 简单类型与引用类型比较，对象转化成其原始类型的值通过 `valueOf` 或者 `toString` 函数，再比较
 
-```
+```js
 let a = { name: 'Jack', age: 18 };
 Object.prototype.valueOf = () => 1;
 a == 1; // true
@@ -267,38 +287,39 @@ JavaScript 数据类型有两种：基本类型和引用类型。
 - 自己手写一个深拷贝方法。
   具体方法就是利用递归，只要某个属性是对象类型，就递归；若是其他类型，则直接复制。代码如下：
 
-```
+```js
 function deepCopy(data) {
-    if (typeof data !== 'object' || data === null) { // typeof null 的结果是 object
-        return data
+  if (typeof data !== 'object' || data === null) {
+    // typeof null 的结果是 object
+    return data;
+  }
+  let result = Array.isArray(data) ? [] : {};
+  for (let key in data) {
+    // for...in 会遍历obj原型上的属性，因此需要用hasOwnProperty(key)来判断下当前属性是否属于obj
+    if (data.hasOwnProperty(key)) {
+      if (typeof data[key] === 'object') {
+        result[key] = deepCopy(data[key]);
+      } else {
+        result[key] = data[key];
+      }
     }
-    let result = Array.isArray(data) ? [] : {}
-    for (let key in data) {
-        // for...in 会遍历obj原型上的属性，因此需要用hasOwnProperty(key)来判断下当前属性是否属于obj
-        if (data.hasOwnProperty(key)) {
-            if (typeof data[key] === 'object') {
-                result[key] = deepCopy(data[key])
-            } else {
-                result[key] = data[key]
-            }
-        }
-    }
-    return result
+  }
+  return result;
 }
 ```
 
-## 7. 说说你对闭包的理解**\*\*\*\***\***\*\*\*\***
+## 7. 说说你对闭包的理解
 
 函数嵌套，内部函数能够访问外部函数的局部变量。
 
-```
+```js
 function fun() {
-    var count = 2
-    return function() {
-        console.log(count)
-    }
+  var count = 2;
+  return function () {
+    console.log(count);
+  };
 }
-fun()
+fun();
 ```
 
 优点：长外部函数局部变量生命周期
@@ -311,16 +332,16 @@ fun()
 JavaScript 遵循的是静态作用域，变量被创建时作用域就确定了，而非执行阶段确定的。<br>
 比如下面这段代码：
 
-```
+```js
 var a = 2;
 function foo() {
-    console.log(a)
+  console.log(a);
 }
 function bar() {
-    var a = 3;
-    foo();
+  var a = 3;
+  foo();
 }
-bar() // 输出2
+bar(); // 输出2
 ```
 
 当在 Javascript 中使用一个变量的时候，首先 Javascript 引擎会尝试在当前作用域下去寻找该变量，如果没找到，再到它的上层作用域寻找，以此类推直到找到该变量或是已经到了全局作用域.<br>
@@ -336,14 +357,15 @@ prototype 上的属性和方法可以被实例对象调用。<br>
 每个对象都有`__proto__`属性，指向其构造函数的原型对象。当我们使用对象的属性时候，如果本身不包含某个属性，就会到其构造函数的原型上查找，而构造函数的原型也是对象，也可以向上查找，直到 null 为止。
 
 看图就明白了：
-![](https://upload-images.jianshu.io/upload_images/1745991-df4821f51e5f945a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![](../images/js/原型链.webp)
 
 ## 10. Javascript 如何实现继承？
 
 - 构造函数继承：只能继承构造函数里的属性和方法<br>
   其实就是在子构造函数里面调用父构造函数（需要修改 this 指向），这样就把父构造函数里的属性和方法放到了子构造函数里了。
 
-```
+```js
 function Person(name, age) {
   this.name = name;
   this.age = age;
@@ -370,14 +392,14 @@ jack.sing(); // 无结果，Student没有继承Person原型上的方法
   通过上面的例子我们可以看出，构造函数继承并不能继承原型链上的方法。那我们怎么才能继承父构造函数原型上的方法呢？<br>
   我们可以把子构造函数原型指向父构造函数的原型。
 
-```
+```js
 Student.prototype = Person.prototype; // - 原始版 缺陷：Student的原型改变导致Person原型改变，因此不可取
 ```
 
 原型一样，自然能够继承原型上的方法。
 但是这样一来就会出现问题，原型是个对象，是引用类型数据，我们再 **修改`Student.prototype`会导致`Person.prototype`的变化。这是不合理的。** 比如：
 
-```
+```js
 Student.prototype.dance = function () {
   console.log('跳舞');
 };
@@ -388,18 +410,18 @@ jack.dance(); // 跳舞    Person的原型上是没有dance方法的。这里是
 
 常用的解决办法是，我们将子构造函数的原型指向福构造函数的一个实例。
 
-```
+```js
 Student.prototype = new Person();
 ```
 
-![](https://upload-images.jianshu.io/upload_images/1745991-861aedc643cbeb93.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](../images/js/原型链继承.webp)
 
 前面说过，调用一个函数的属性时，编译器会先看对象本身是否有这个属性，如果没有就到对象的`__proto__`属性上去找，如果还找不到，继续找`__proto__`的`__proto__`属性，直到 null 为止。这样一来，Student 实例就能够调用 Person 实例的方法，从而调用 Person 原型的方法。
 
 - 组合继承<br>
   把构造函数继承和组合继承结合起来就是组合继承了。整体代码如下：
 
-```
+```js
 function Person(name, age) {
   this.name = name;
   this.age = age;
@@ -423,7 +445,7 @@ Student.prototype.constructor = Student; // 修改constructor指向
 
 - 寄生组合继承
 
-```
+```js
 function Person(name, age) {
   this.name = name;
   this.age = age;
@@ -443,7 +465,7 @@ Student.prototype = Object.create(Person.prototype); // Object.create(proto)创�
 Student.prototype.constructor = Student; // 修改constructor指向
 ```
 
-![](https://upload-images.jianshu.io/upload_images/1745991-09fe4ca0e062f659.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![](../images/js/寄生组合继承.webp)
 
 Student 实例能够调用 Student 原型上的方法，而 Student 原型又可以通过`__proto__`获取 Person 原型上的方法。这样就实现了 Student 继承 Person 原型上的方法。
 
@@ -451,7 +473,7 @@ Student 实例能够调用 Student 原型上的方法，而 Student 原型又可
 
 最好用的继承，自然是使用 ES6 里的 class:
 
-```
+```js
 class Person {
     constructor(name, age) {
         this.name = name
@@ -470,66 +492,315 @@ ES6 的 class 本质上还是函数。如果用 babel 转译后会发现，它�
 
 ## 11. 谈谈 this 对象的理解
 
-普通函数，this 指向调用它的那个对象。<br>
-箭头函数，没有具体的 this,它的 this 相当于是从上下文继承的,也就是说定义时候的上下文 this(使用 call,apply 等任何方式都无法改变 this 的指向)。<br>
+1. **普通函数:** this 指向调用函数的那个对象。具体来说：
 
-改变 this 指向可以使用 call, bind, apply 方法改变。
+```js
+function foo() {
+  console.log(this);
+}
+
+foo(); // window or global
+```
+
+```js
+const obj = {
+  foo() {
+    console.log(this);
+  }
+};
+
+obj.foo(); // obj
+```
+
+```js
+function Person(name) {
+  this.name = name;
+}
+
+const person = new Person('Alice');
+console.log(person.name); // Alice
+```
+
+当使用 call、apply 或 bind 方法来调用函数时，this 可以被显式地指定。例如：
+
+```js
+function foo() {
+  console.log(this);
+}
+
+const obj = { name: 'Alice' };
+
+foo.call(obj); // obj
+foo.apply(obj); // obj
+
+const boundFoo = foo.bind(obj);
+boundFoo(); // obj
+```
+
+2. **箭头函数:** 箭头函数不会创建自己的 this，它会继承上层执行上下文的 this。不能通过 call、apply、bind 等方法来改变它的指向，因为箭头函数的 this 指向是在函数定义时就确定了的，是静态的。如果需要改变箭头函数内部的 this 指向，可以使用闭包或者普通函数来实现。
+
+```js
+const obj = {
+  foo() {
+    const arrow = () => {
+      console.log(this);
+    };
+    arrow.call(window);
+  }
+};
+
+obj.foo(); // obj
+```
 
 ## 12. JavaScript 中执行上下文和执行栈是什么？
+
+在 JavaScript 中，执行上下文（Execution Context）是指 JavaScript 引擎在执行代码时所创建的一个抽象概念，它包含了当前代码执行时所需的所有信息，如变量、函数、作用域等。执行上下文可以理解为一个对象，它有三个重要的属性：变量对象、作用域链和 this 值。
+
+执行栈（Execution Stack）是指 JavaScript 引擎在执行代码时所使用的一种数据结构，它是一个后进先出（LIFO）的栈，用于存储所有执行上下文。每当 JavaScript 引擎执行一个函数时，都会创建一个新的执行上下文，并将其推入执行栈的顶部。当函数执行完毕后，它的执行上下文会从执行栈中弹出，控制权会回到上一个执行上下文。
+
+执行栈的作用是维护代码执行的顺序和执行上下文的创建和销毁。它保证了当前正在执行的代码具有正确的执行上下文和作用域，使得 JavaScript 引擎能够正确地执行代码。
+
+执行上下文是 JavaScript 引擎在执行代码时所创建的一个抽象概念。每当 JavaScript 引擎开始执行一个函数或全局代码时，都会创建一个新的执行上下文。执行上下文可以理解为一个对象，它包含了当前代码执行时所需的所有信息，如变量、函数、作用域等。每个执行上下文都有三个重要的属性：
+
+1. 变量对象（Variable Object）：用于存储函数内部的变量和函数声明。对于全局执行上下文来说，变量对象就是全局对象。
+
+2. 作用域链（Scope Chain）：用于解析变量和函数的作用域。作用域链是一个指向父级执行上下文的指针列表，它决定了当前执行上下文可以访问哪些变量和函数。
+
+3. this 值：用于指向当前执行上下文所属的对象。
+
+执行栈是 JavaScript 引擎在执行代码时所使用的一种数据结构，它是一个后进先出（LIFO）的栈，用于存储所有执行上下文。每当 JavaScript 引擎执行一个函数时，都会创建一个新的执行上下文，并将其推入执行栈的顶部。当函数执行完毕后，它的执行上下文会从执行栈中弹出，控制权会回到上一个执行上下文。
+
+执行栈的作用是维护代码执行的顺序和执行上下文的创建和销毁。它保证了当前正在执行的代码具有正确的执行上下文和作用域，使得 JavaScript 引擎能够正确地执行代码。
 
 ## 13. 说说 JavaScript 中的事件模型(事件传播机制)
 
 js 事件传播有三个阶段：事件捕获、目标阶段、事件冒泡
 
-- 事件捕获阶段：事件从 document 一直向下传播到目标元素, 依次检查经过的节点是否绑定了事件监听函数，如果有则执行
-- 事件处理阶段：事件到达目标元素, 触发目标元素的监听函数
-- 事件冒泡阶段：事件从目标元素冒泡到 document, 依次检查经过的节点是否绑定了事件监听函数，如果有则执行
+- 事件捕获：事件从 document 一直向下传播到目标元素, 依次检查经过的节点是否绑定了事件监听函数，如果有则执行
+- 目标阶段：事件到达目标元素, 触发目标元素的监听函数。如果事件是通过 addEventListener 注册的，则按照注册顺序执行，如果是通过 on\* 属性注册的，则只执行最后一个注册的处理函数。
+- 事件冒泡：事件从目标元素冒泡到 document, 依次检查经过的节点是否绑定了事件监听函数，如果有则执行
+
   一般情况下，默认都是冒泡阶段触发事件，因此事件触发的顺序是从内到外。
-  取消默认事件：W3C 的方法是 e.preventDefault()，IE 则是使用 e.returnValue = false
+
+  取消默认事件：`e.preventDefault()`，比如一个提交按钮，我们不想让它提交。
+  取消冒泡: `e.stopPropagation()`
 
 ## 14. 解释下什么是事件代理？应用场景？
 
-    利用事件冒泡的原理，把事件加到父级上，触发执行效果
-    好处：减少事件数量，提高性能
-    新添加的元素，依然可以触发该事件
-    比如一个页面有 100 个按钮，点击每个按钮都会触发某个操作。我们可以给这 100 个按钮的父级添加点击事件，然后再判断是哪个按钮，执行对应的操作。
+利用事件冒泡的原理，把事件加到父级上，触发执行效果
+
+好处：减少事件数量，提高性能。新添加的元素，依然可以触发该事件
+
+比如一个页面有 100 个按钮，点击每个按钮都会触发某个操作。我们可以给这 100 个按钮的父级添加点击事件，然后再判断是哪个按钮，执行对应的操作。
 
 ## 15. typeof 与 instanceof 区别
 
+typeof 和 instanceof 都是 JavaScript 中用于判断数据类型的运算符，但它们的作用和使用方式有所不同。
+
+typeof 运算符用于判断一个变量的数据类型，它返回一个字符串，表示该变量的数据类型。typeof 运算符可以用于任何类型的变量，包括基本数据类型和引用数据类型，例如：
+
+```js
+typeof 123; // "number"
+typeof 'hello'; // "string"
+typeof true; // "boolean"
+typeof undefined; // "undefined"
+typeof null; // "object"
+typeof [1, 2, 3]; // "object"
+typeof { name: 'Tom', age: 18 }; // "object"
+typeof function () {}; // "function"
+```
+
+需要注意的是，typeof 运算符对于 null 类型的变量会返回 "object"，这是一个历史遗留问题。
+
+而 instanceof 运算符用于判断一个对象是否为某个类的实例，它返回一个布尔值，表示该对象是否为指定类的实例。instanceof 运算符只能用于引用数据类型，例如：
+
+```js
+var arr = [1, 2, 3];
+arr instanceof Array; // true
+
+var person = { name: 'Tom', age: 18 };
+person instanceof Object; // true
+
+function Animal(name) {
+  this.name = name;
+}
+var cat = new Animal('Kitty');
+cat instanceof Animal; // true
+```
+
+需要注意的是，instanceof 运算符判断的是对象的原型链，而不是对象本身的类型。如果一个对象的原型链中出现了指定类的原型对象，那么该对象就被认为是指定类的实例。
+
+总之，typeof 运算符和 instanceof 运算符都用于判断数据类型，但它们的作用和使用方式有所不同。typeof 运算符用于判断变量的数据类型，而 instanceof 运算符用于判断对象是否为某个类的实例。
+
 ## 16. 说说 new 操作符具体干了什么？
 
-    创建一个空对象
-    由 this 变量引用该对象
-    该对象继承构造函数的原型（更改 this 指向）
-    把属性和方法加入到 this 引用的对象
-    最后隐式的返回 this
+JavaScript 中的 new 操作符用于创建一个对象，并调用一个函数作为该对象的构造函数。new 操作符的具体步骤如下：
 
+创建一个新对象。
+将该新对象的 proto 属性指向构造函数的 prototype 属性。
+将构造函数的 this 指向该新对象。
+执行构造函数中的代码，如果构造函数有返回值并且返回值是一个对象，则返回该对象，否则返回该新对象。
+具体来说，new 操作符的作用是将一个函数作为构造函数，创建一个新对象，并将该对象作为函数的 this 对象，然后执行函数中的代码。在函数中，可以通过 this 对象来访问和修改新对象的属性和方法。
+
+例如，下面是一个使用 new 操作符创建对象的例子：
+
+```js
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+}
+var person = new Person('Tom', 18);
+console.log(person.name); // "Tom"
+console.log(person.age); // 18
 ```
-let obj = {}
-obj.__proto__ = Person.prototype
-Person.call(obj)
+
+在这个例子中，我们定义了一个 Person 构造函数，然后使用 new 操作符创建一个新对象 person，该对象的 name 和 age 属性分别为 "Tom" 和 18。
+
+需要注意的是，new 操作符只能用于构造函数，如果用于普通函数或其他类型的对象，会抛出一个 TypeError 异常。
+
+总之，JavaScript 中的 new 操作符用于创建一个对象，并调用一个函数作为该对象的构造函数。new 操作符的作用是将一个函数作为构造函数，创建一个新对象，并将该对象作为函数的 this 对象，然后执行函数中的代码。
+
+1. 创建一个空对象
+2. 由 this 变量引用该对象
+3. 该对象继承构造函数的原型（更改 this 指向）
+4. 把属性和方法加入到 this 引用的对象
+5. 最后隐式的返回 this
+
+```js
+let obj = {};
+obj.__proto__ = Person.prototype;
+Person.call(obj);
 ```
 
 ## 17. ajax 原理是什么？如何实现？
 
+Ajax（Asynchronous JavaScript and XML）指的是一种用于在客户端和服务器之间进行异步数据交互的技术。使用 Ajax 技术，可以在不刷新整个页面的情况下，向服务器发送请求并获取数据，然后使用 JavaScript 动态更新页面内容，从而提高用户体验和页面性能。
+
+Ajax 的实现原理主要包括以下几个步骤：
+
+创建 XMLHttpRequest 对象：使用 JavaScript 中的 XMLHttpRequest 对象来创建一个异步的 HTTP 请求对象。
+
+发送 HTTP 请求：使用 XMLHttpRequest 对象的 open() 方法和 send() 方法来发送 HTTP 请求，可以设置请求的 URL、请求方式、请求头、请求参数等信息。
+
+接收服务器响应：使用 XMLHttpRequest 对象的 onreadystatechange 事件来监听服务器的响应，当服务器返回响应时，可以通过 XMLHttpRequest 对象的 responseText 或者 responseXML 属性来获取响应数据。
+
+处理响应数据：根据服务器返回的响应数据，使用 JavaScript 动态更新页面内容，例如更新文本、图片、表格、列表等元素。
+
+使用 Ajax 技术可以实现各种功能，例如表单验证、登录、注册、搜索、分页、文件上传、聊天等。常见的 Ajax 库包括 jQuery、Zepto、AngularJS、Vue.js 等。
+
+下面是一个使用原生 JavaScript 实现 Ajax 的例子：
+
+```js
+function ajax(url, method, data, success, error) {
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        success(xhr.responseText);
+      } else {
+        error(xhr.status);
+      }
+    }
+  };
+  xhr.open(method, url, true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify(data));
+}
+
+ajax(
+  '/api/login',
+  'POST',
+  { username: 'Tom', password: '123456' },
+  function (response) {
+    console.log('登录成功：' + response);
+  },
+  function (status) {
+    console.log('登录失败：' + status);
+  }
+);
+```
+
+在这个例子中，我们定义了一个 ajax() 函数，该函数接收一个 URL、请求方式、请求参数、成功回调函数和失败回调函数等参数。在函数中，我们使用 XMLHttpRequest 对象来发送 HTTP 请求，并根据服务器的响应来调用成功回调函数或失败回调函数。
+
+总之，Ajax 技术可以在客户端和服务器之间进行异步数据交互，从而提高用户体验和页面性能。使用 Ajax 技术，需要创建一个 XMLHttpRequest 对象，发送 HTTP 请求并接收服务器响应，最后使用 JavaScript 动态更新页面内容。
+
 ## 18. bind、call、apply 区别？如何实现一个 bind?
 
-    call, apply 和 bind 是 Function 原型上的三个方法，都是为了改变函数体内部 this 的指向。
-    call、apply、bind 三者第一个参数都是 this 要指向的对象，后面的参数 call 是一个个的参数列表，apply 则是放到数组中的
-    bind 是返回一个函数，便于稍后调用。call, apply 则是立即调用
+call, apply 和 bind 是 Function 原型上的三个方法，都是为了改变函数体内部 this 的指向。
+
+call、apply、bind 三者第一个参数都是 this 要指向的对象，后面的参数 call 是一个个的参数列表，apply 则是放到数组中的
+
+bind 是返回一个函数，便于稍后调用。call, apply 则是立即调用
 
 ## 19. 说说你对正则表达式的理解？应用场景？
 
+正则表达式（Regular Expression）是一种用于匹配字符串模式的表达式，它可以用来检查、替换和提取字符串中符合条件的部分。正则表达式是一种强大而灵活的工具，可以用于各种编程语言和操作系统中，例如 JavaScript、Python、Java、PHP、Linux 等。
+
+正则表达式的基本语法由一些特殊字符和普通字符组成，这些字符用于表示匹配规则，例如：
+
+普通字符：表示匹配该字符本身，例如 "hello" 匹配字符串中的 "hello"。
+元字符（Metacharacter）：表示匹配一类字符，例如 "\d" 匹配任意数字，"\w" 匹配任意字母数字字符。
+字符类（Character Class）：表示匹配一组字符中的任意一个字符，例如 "[abc]" 匹配 a、b、c 中的任意一个字符。
+量词（Quantifier）：表示匹配前面的字符出现的次数，例如 "a{3}" 匹配三个连续的 "a"。
+边界（Boundary）：表示匹配字符串的边界，例如 "^" 匹配字符串的开头，"$" 匹配字符串的结尾。
+正则表达式的应用场景非常广泛，例如：
+
+表单验证：可以使用正则表达式来验证用户输入的邮箱、手机号、密码等格式是否正确。
+数据提取：可以使用正则表达式来从 HTML、XML、JSON 等格式的文本中提取需要的数据。
+文本替换：可以使用正则表达式来替换文本中的某些字符或字符串。
+编辑器高亮：可以使用正则表达式来实现代码编辑器的语法高亮功能。
+需要注意的是，正则表达式的语法较为复杂，需要一定的学习和练习才能熟练掌握。同时，正则表达式的性能较低，对于大规模的文本处理，需要使用其他更高效的算法和工具。
+
+总之，正则表达式是一种用于匹配字符串模式的表达式，它可以用于检查、替换和提取字符串中符合条件的部分。正则表达式的应用场景非常广泛，包括表单验证、数据提取、文本替换、编辑器高亮等。
+
 ## 20. 说说你对事件循环的理解
 
-    js 执行时，遇到同步任务，就将同步任务按照执行顺序排列到执行栈中。
-    遇到异步任务，会将此类异步任务挂起，继续执行执行栈中的任务。等异步任务返回结果后，再按照顺序排列到事件队列中。
-    主线程先将执行栈中的同步任务清空，然后检查事件队列中是否有任务，如果有，就将第一个事件对应的回调推到执行栈中执行，若在执行过程中遇到异步任务，则继续将这个异步任务排列到事件队列中。
-    主线程每次将执行栈清空后，就去事件队列中检查是否有任务，如果有，就每次取出一个推到执行栈中执行，这个循环往复的过程被称为“Event Loop 事件循环”。
+js 执行时，遇到同步任务，就将同步任务按照执行顺序排列到执行栈中。
+遇到异步任务，会将此类异步任务挂起，继续执行执行栈中的任务。等异步任务返回结果后，再按照顺序排列到事件队列中。
+主线程先将执行栈中的同步任务清空，然后检查事件队列中是否有任务，如果有，就将第一个事件对应的回调推到执行栈中执行，若在执行过程中遇到异步任务，则继续将这个异步任务排列到事件队列中。
+主线程每次将执行栈清空后，就去事件队列中检查是否有任务，如果有，就每次取出一个推到执行栈中执行，这个循环往复的过程被称为“Event Loop 事件循环”。
+
+宏任务、微任务：
+JavaScript 中的任务分为宏任务和微任务两种类型，它们的执行顺序有所不同。
+
+宏任务（Macrotask）包括以下几种：
+
+script（整体代码）
+setTimeout、setInterval、setImmediate
+I/O 操作、UI 渲染
+Ajax 请求、fetch 请求、WebSocket 请求等网络请求操作
+MessageChannel、postMessage、MessagePort 等异步通信操作
+宏任务是由 JavaScript 引擎的宿主环境（例如浏览器、Node.js）提供的，它们的执行顺序是由事件循环（Event Loop）控制的。当主线程执行完一个宏任务后，事件循环会从宏任务队列中取出下一个宏任务执行，直到宏任务队列为空为止。
+
+微任务（Microtask）包括以下几种：
+
+Promise.then() 和 Promise.catch()
+process.nextTick（Node.js 环境）
+MutationObserver（浏览器环境）
+微任务是在宏任务执行完毕后，立即执行的任务。当主线程执行完一个宏任务后，如果宏任务中产生了微任务，事件循环会将微任务放入微任务队列中，然后继续执行下一个宏任务。当宏任务队列为空时，事件循环会依次执行微任务队列中的任务，直到微任务队列为空为止。
+
+需要注意的是，微任务的执行顺序优先于宏任务，也就是说，当主线程执行完一个宏任务后，先执行微任务队列中的任务，然后再执行下一个宏任务。因此，如果在微任务中产生了新的微任务，也会在当前宏任务执行完毕后立即执行。
+
+总之，JavaScript 中的任务分为宏任务和微任务两种类型，它们的执行顺序有所不同。宏任务包括 script、setTimeout、setInterval、I/O 操作、Ajax 请求等，微任务包括 Promise、process.nextTick、MutationObserver 等。微任务的执行顺序优先于宏任务，也就是说，在当前宏任务执行完毕后，先执行微任务队列中的任务，然后再执行下一个宏任务。
 
 ## 21. DOM 常见的操作有哪些？
 
 ## 22. 说说你对 BOM 的理解，常见的 BOM 对象你了解哪些？
+
+BOM（Browser Object Model）是浏览器对象模型的简称，它提供了一组 JavaScript 对象，用于操作浏览器窗口和浏览器本身。BOM 对象的主要作用是与用户界面交互，包括控制浏览器窗口、对话框、处理用户输入等。
+
+常见的 BOM 对象包括：
+
+window 对象：表示浏览器的窗口，是 BOM 的核心对象。window 对象包括浏览器窗口的大小、位置、URL、历史记录、导航、定时器等属性和方法。
+navigator 对象：表示浏览器的信息，包括浏览器的名称、版本、操作系统等信息。
+screen 对象：表示用户的屏幕，包括屏幕的大小、颜色深度等属性。
+location 对象：表示当前页面的 URL，包括协议、主机名、路径、查询参数等信息。
+history 对象：表示浏览器的历史记录，包括前进、后退、跳转等方法。
+除了以上常见的 BOM 对象，还有一些其他的对象，例如 document 对象、XMLHttpRequest 对象、Storage 对象等，它们通常被认为是 DOM（Document Object Model）或者 HTML5 API 的一部分，但也可以被视为 BOM 对象的一部分。
+
+需要注意的是，BOM 对象的具体实现可能会因浏览器而异，因此在使用 BOM 对象时，需要注意兼容性问题，并尽量避免使用浏览器特定的属性和方法。
+
+总之，BOM（Browser Object Model）是浏览器对象模型的简称，它提供了一组 JavaScript 对象，用于操作浏览器窗口和浏览器本身。常见的 BOM 对象包括 window、navigator、screen、location、history 等。在使用 BOM 对象时，需要注意兼容性问题，并尽量避免使用浏览器特定的属性和方法。
 
 ## 23. 举例说明你对尾递归的理解，有哪些应用场景
 
