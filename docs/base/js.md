@@ -34,8 +34,8 @@ Object.prototype.toString.call(() => {})) // [object Function]
   `push`: 向数组末尾插入任意数量的参数。返回数组的最新长度。改变原有数组。
 
 ```js
-let colors = ["red"];
-const len = colors.push("green", "blue");
+let colors = ['red'];
+const len = colors.push('green', 'blue');
 console.log(len); // 3
 console.log(colors); // ['red', 'green', 'blue']
 ```
@@ -43,8 +43,8 @@ console.log(colors); // ['red', 'green', 'blue']
 `unshift`: 向数组开头插入任意数量的参数。返回数组的最新长度。改变原有数组。
 
 ```js
-let colors = ["red"];
-const len = colors.unshift("green", "blue");
+let colors = ['red'];
+const len = colors.unshift('green', 'blue');
 console.log(len); // 3
 console.log(colors); // ['green', 'blue', 'red']
 ```
@@ -52,8 +52,8 @@ console.log(colors); // ['green', 'blue', 'red']
 `splice`: 传入三个参数，分别是开始位置，删除的元素个数，插入的元素。返回删除元素组成的数组。改变原有数组。
 
 ```js
-let colors = ["red", "green", "blue"];
-let removeList = colors.splice(1, 0, "yellow", "black");
+let colors = ['red', 'green', 'blue'];
+let removeList = colors.splice(1, 0, 'yellow', 'black');
 console.log(removeList); // []
 console.log(colors); // ['red','yellow', 'black', 'green', 'blue']
 ```
@@ -61,8 +61,8 @@ console.log(colors); // ['red','yellow', 'black', 'green', 'blue']
 `concat`: 创建一个当前数组的副本，并把参数添加到副本末尾。常用来合并多个数组。不改变原有数组。
 
 ```js
-let colors = ["red"];
-let newColors = colors.concat("green", "blue", ["yellow"]);
+let colors = ['red'];
+let newColors = colors.concat('green', 'blue', ['yellow']);
 console.log(newColors); // ['red', 'green', 'blue', 'yellow']
 console.log(colors); // ['red']
 ```
@@ -76,7 +76,7 @@ console.log(colors); // ['red']
   `splice`: 改变原有数组。返回被删除元素组成的数组。
 
 ```js
-let colors = ["red", "green", "blue"];
+let colors = ['red', 'green', 'blue'];
 let removeList = colors.splice(1, 2);
 console.log(removeList); // ['green', 'blue']
 console.log(colors); // ['red']
@@ -85,7 +85,7 @@ console.log(colors); // ['red']
 `slice`: 分割数组，不影响原有数组。
 
 ```js
-let colors = ["red", "green", "blue", "yellow", "orange", "pink"];
+let colors = ['red', 'green', 'blue', 'yellow', 'orange', 'pink'];
 let newColors = colors.slice(2, 4);
 console.log(newColors); // ['blue', 'yellow']
 console.log(colors); // ['red', 'green', 'blue', 'yellow', 'orange', 'pink']
@@ -144,7 +144,7 @@ console.log(a); // [5, 4, 3, 2, 1]
 ```js
 let a = [1, 2, 3];
 a.join(); // 1,2,3
-a.join("|"); // 1|2|3
+a.join('|'); // 1|2|3
 ```
 
 ## 3. Javascript 字符串的常用方法有哪些？
@@ -153,8 +153,8 @@ a.join("|"); // 1|2|3
   `concat`: 用于将一个或多个字符串拼接成一个新字符串。不改变原字符串。
 
 ```js
-let str = "hello";
-let newStr = str.concat(" ", "world", "!");
+let str = 'hello';
+let newStr = str.concat(' ', 'world', '!');
 console.log(newStr); // 'hello, world!'
 console.log(str); // 'hello'
 ```
@@ -182,13 +182,13 @@ console.log(str); // 'hello'
   `charAt`: 返回给定索引位置的字符.
 
 ```js
-"hello".charAt(1); // 'e'
+'hello'.charAt(1); // 'e'
 ```
 
 `at`: 返回给定索引位置的字符，支持负数。
 
 ```js
-"hello".at(-1); // 'o'
+'hello'.at(-1); // 'o'
 ```
 
 `indexOf`: 从字符串开头去搜索传入的字符串，并返回位置（如果没找到，则返回 -1 ）
@@ -199,8 +199,8 @@ console.log(str); // 'hello'
   `split`: 通过分隔符分割字符串，返回分割后元素的数组。
 
 ```js
-let str = "test*test*test";
-let strArr = str.split("*");
+let str = 'test*test*test';
+let strArr = str.split('*');
 console.log(strArr);
 ```
 
@@ -234,14 +234,14 @@ JavaScript 中的类型转换规则如下：
 
 ```js
 2 == true; // false
-"2" == true; // false
-"1" == true; // true
+'2' == true; // false
+'1' == true; // true
 ```
 
 - 简单类型与引用类型比较，对象转化成其原始类型的值通过 `valueOf` 或者 `toString` 函数，再比较
 
 ```js
-let a = { name: "Jack", age: 18 };
+let a = { name: 'Jack', age: 18 };
 Object.prototype.valueOf = () => 1;
 a == 1; // true
 ```
@@ -260,12 +260,12 @@ NaN 跟谁都不相等。<br>
 
 代码如下：
 
-```
-+0 === -0 // true
-NaN === NaN // false
+```js
++0 === -0; // true
+NaN === NaN; // false
 
-Object.is(+0, -0) // false
-Object.is(NaN, NaN) // true
+Object.is(+0, -0); // false
+Object.is(NaN, NaN); // true
 ```
 
 ## 6. 深拷贝浅拷贝的区别？如何实现一个深拷贝？
@@ -289,7 +289,7 @@ JavaScript 数据类型有两种：基本类型和引用类型。
 
 ```js
 function deepCopy(data) {
-  if (typeof data !== "object" || data === null) {
+  if (typeof data !== 'object' || data === null) {
     // typeof null 的结果是 object
     return data;
   }
@@ -297,7 +297,7 @@ function deepCopy(data) {
   for (let key in data) {
     // for...in 会遍历obj原型上的属性，因此需要用hasOwnProperty(key)来判断下当前属性是否属于obj
     if (data.hasOwnProperty(key)) {
-      if (typeof data[key] === "object") {
+      if (typeof data[key] === 'object') {
         result[key] = deepCopy(data[key]);
       } else {
         result[key] = data[key];
@@ -323,6 +323,7 @@ fun();
 ```
 
 优点：长外部函数局部变量生命周期
+
 缺点：容易造成内存泄漏，被内部函数访问的变量需要手动回收
 
 ## 8. 说说你对作用域链的理解
@@ -370,11 +371,11 @@ function Person(name, age) {
   this.name = name;
   this.age = age;
   this.say = function () {
-    console.log("你好");
+    console.log('你好');
   };
 }
 Person.prototype.sing = function () {
-  console.log("唱歌");
+  console.log('唱歌');
 };
 
 function Student(name, age, score) {
@@ -382,7 +383,7 @@ function Student(name, age, score) {
   this.score = score;
 }
 
-const jack = new Student("Jack", 18, 100);
+const jack = new Student('Jack', 18, 100);
 console.log(jack.name); // Jack
 jack.say(); // 你好
 jack.sing(); // 无结果，Student没有继承Person原型上的方法
@@ -401,10 +402,10 @@ Student.prototype = Person.prototype; // - 原始版 缺陷：Student的原型�
 
 ```js
 Student.prototype.dance = function () {
-  console.log("跳舞");
+  console.log('跳舞');
 };
 
-const jack = new Person("Jack", 18);
+const jack = new Person('Jack', 18);
 jack.dance(); // 跳舞    Person的原型上是没有dance方法的。这里是因为我们扩展了Student的原型导致Person原型变化
 ```
 
@@ -426,11 +427,11 @@ function Person(name, age) {
   this.name = name;
   this.age = age;
   this.say = function () {
-    console.log("你好");
+    console.log('你好');
   };
 }
 Person.prototype.sing = function () {
-  console.log("唱歌");
+  console.log('唱歌');
 };
 
 function Student(name, age, score) {
@@ -450,11 +451,11 @@ function Person(name, age) {
   this.name = name;
   this.age = age;
   this.say = function () {
-    console.log("你好");
+    console.log('你好');
   };
 }
 Person.prototype.sing = function () {
-  console.log("唱歌");
+  console.log('唱歌');
 };
 
 function Student(name, age, score) {
@@ -506,7 +507,7 @@ foo(); // window or global
 const obj = {
   foo() {
     console.log(this);
-  },
+  }
 };
 
 obj.foo(); // obj
@@ -517,7 +518,7 @@ function Person(name) {
   this.name = name;
 }
 
-const person = new Person("Alice");
+const person = new Person('Alice');
 console.log(person.name); // Alice
 ```
 
@@ -528,7 +529,7 @@ function foo() {
   console.log(this);
 }
 
-const obj = { name: "Alice" };
+const obj = { name: 'Alice' };
 
 foo.call(obj); // obj
 foo.apply(obj); // obj
@@ -537,7 +538,7 @@ const boundFoo = foo.bind(obj);
 boundFoo(); // obj
 ```
 
-2. **箭头函数:** 箭头函数不会创建自己的 this，它会继承上层执行上下文的 this。不能通过 call、apply、bind 等方法来改变它的指向，因为箭头函数的 this 指向是在函数定义时就确定了的，是静态的。如果需要改变箭头函数内部的 this 指向，可以使用闭包或者普通函数来实现。
+2. **箭头函数:** 箭头函数不会创建自己的 this，它会继承上层执行上下文的 this。不能通过 call、apply、bind 等方法来改变它的指向，因为箭头函数的 this 指向是在函数定义时就确定了的，是静态的。
 
 ```js
 const obj = {
@@ -546,7 +547,7 @@ const obj = {
       console.log(this);
     };
     arrow.call(window);
-  },
+  }
 };
 
 obj.foo(); // obj
@@ -607,12 +608,12 @@ typeof 运算符用于判断一个变量的数据类型，它返回一个字符�
 
 ```js
 typeof 123; // "number"
-typeof "hello"; // "string"
+typeof 'hello'; // "string"
 typeof true; // "boolean"
 typeof undefined; // "undefined"
 typeof null; // "object"
 typeof [1, 2, 3]; // "object"
-typeof { name: "Tom", age: 18 }; // "object"
+typeof { name: 'Tom', age: 18 }; // "object"
 typeof function () {}; // "function"
 ```
 
@@ -624,13 +625,13 @@ typeof function () {}; // "function"
 var arr = [1, 2, 3];
 arr instanceof Array; // true
 
-var person = { name: "Tom", age: 18 };
+var person = { name: 'Tom', age: 18 };
 person instanceof Object; // true
 
 function Animal(name) {
   this.name = name;
 }
-var cat = new Animal("Kitty");
+var cat = new Animal('Kitty');
 cat instanceof Animal; // true
 ```
 
@@ -655,7 +656,7 @@ function Person(name, age) {
   this.name = name;
   this.age = age;
 }
-var person = new Person("Tom", 18);
+var person = new Person('Tom', 18);
 console.log(person.name); // "Tom"
 console.log(person.age); // 18
 ```
@@ -709,19 +710,19 @@ function ajax(url, method, data, success, error) {
     }
   };
   xhr.open(method, url, true);
-  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.send(JSON.stringify(data));
 }
 
 ajax(
-  "/api/login",
-  "POST",
-  { username: "Tom", password: "123456" },
+  '/api/login',
+  'POST',
+  { username: 'Tom', password: '123456' },
   function (response) {
-    console.log("登录成功：" + response);
+    console.log('登录成功：' + response);
   },
   function (status) {
-    console.log("登录失败：" + status);
+    console.log('登录失败：' + status);
   }
 );
 ```
@@ -844,6 +845,7 @@ Session Storage 也是 HTML5 中新增的一种本地存储方式，与 Local St
 除了上述三种方式，还可以使用 IndexedDB、Web SQL 等技术进行本地存储。这些技术支持更复杂的数据类型和数据结构，但是使用相对复杂，需要掌握更多的 API。在应用场景方面，它们适用于存储大量复杂的数据结构，如离线应用程序、在线文件管理等。
 
 ## 26. 说说你对函数式编程的理解？优缺点？
+
 函数式编程是一种编程范式，它将计算视为函数之间的数学关系，避免了状态和可变数据的概念，注重函数的组合和应用，通过纯函数和不可变数据结构来实现计算。函数式编程的主要特点是函数的“无副作用”和“不可变性”。
 
 函数式编程的优点：
