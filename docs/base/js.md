@@ -34,8 +34,8 @@ Object.prototype.toString.call(() => {})) // [object Function]
   `push`: 向数组末尾插入任意数量的参数。返回数组的最新长度。改变原有数组。
 
 ```js
-let colors = ['red'];
-const len = colors.push('green', 'blue');
+let colors = ["red"];
+const len = colors.push("green", "blue");
 console.log(len); // 3
 console.log(colors); // ['red', 'green', 'blue']
 ```
@@ -43,8 +43,8 @@ console.log(colors); // ['red', 'green', 'blue']
 `unshift`: 向数组开头插入任意数量的参数。返回数组的最新长度。改变原有数组。
 
 ```js
-let colors = ['red'];
-const len = colors.unshift('green', 'blue');
+let colors = ["red"];
+const len = colors.unshift("green", "blue");
 console.log(len); // 3
 console.log(colors); // ['green', 'blue', 'red']
 ```
@@ -52,8 +52,8 @@ console.log(colors); // ['green', 'blue', 'red']
 `splice`: 传入三个参数，分别是开始位置，删除的元素个数，插入的元素。返回删除元素组成的数组。改变原有数组。
 
 ```js
-let colors = ['red', 'green', 'blue'];
-let removeList = colors.splice(1, 0, 'yellow', 'black');
+let colors = ["red", "green", "blue"];
+let removeList = colors.splice(1, 0, "yellow", "black");
 console.log(removeList); // []
 console.log(colors); // ['red','yellow', 'black', 'green', 'blue']
 ```
@@ -61,8 +61,8 @@ console.log(colors); // ['red','yellow', 'black', 'green', 'blue']
 `concat`: 创建一个当前数组的副本，并把参数添加到副本末尾。常用来合并多个数组。不改变原有数组。
 
 ```js
-let colors = ['red'];
-let newColors = colors.concat('green', 'blue', ['yellow']);
+let colors = ["red"];
+let newColors = colors.concat("green", "blue", ["yellow"]);
 console.log(newColors); // ['red', 'green', 'blue', 'yellow']
 console.log(colors); // ['red']
 ```
@@ -76,7 +76,7 @@ console.log(colors); // ['red']
   `splice`: 改变原有数组。返回被删除元素组成的数组。
 
 ```js
-let colors = ['red', 'green', 'blue'];
+let colors = ["red", "green", "blue"];
 let removeList = colors.splice(1, 2);
 console.log(removeList); // ['green', 'blue']
 console.log(colors); // ['red']
@@ -85,7 +85,7 @@ console.log(colors); // ['red']
 `slice`: 分割数组，不影响原有数组。
 
 ```js
-let colors = ['red', 'green', 'blue', 'yellow', 'orange', 'pink'];
+let colors = ["red", "green", "blue", "yellow", "orange", "pink"];
 let newColors = colors.slice(2, 4);
 console.log(newColors); // ['blue', 'yellow']
 console.log(colors); // ['red', 'green', 'blue', 'yellow', 'orange', 'pink']
@@ -144,7 +144,7 @@ console.log(a); // [5, 4, 3, 2, 1]
 ```js
 let a = [1, 2, 3];
 a.join(); // 1,2,3
-a.join('|'); // 1|2|3
+a.join("|"); // 1|2|3
 ```
 
 ## 3. Javascript 字符串的常用方法有哪些？
@@ -153,8 +153,8 @@ a.join('|'); // 1|2|3
   `concat`: 用于将一个或多个字符串拼接成一个新字符串。不改变原字符串。
 
 ```js
-let str = 'hello';
-let newStr = str.concat(' ', 'world', '!');
+let str = "hello";
+let newStr = str.concat(" ", "world", "!");
 console.log(newStr); // 'hello, world!'
 console.log(str); // 'hello'
 ```
@@ -182,13 +182,13 @@ console.log(str); // 'hello'
   `charAt`: 返回给定索引位置的字符.
 
 ```js
-'hello'.charAt(1); // 'e'
+"hello".charAt(1); // 'e'
 ```
 
 `at`: 返回给定索引位置的字符，支持负数。
 
 ```js
-'hello'.at(-1); // 'o'
+"hello".at(-1); // 'o'
 ```
 
 `indexOf`: 从字符串开头去搜索传入的字符串，并返回位置（如果没找到，则返回 -1 ）
@@ -199,8 +199,8 @@ console.log(str); // 'hello'
   `split`: 通过分隔符分割字符串，返回分割后元素的数组。
 
 ```js
-let str = 'test*test*test';
-let strArr = str.split('*');
+let str = "test*test*test";
+let strArr = str.split("*");
 console.log(strArr);
 ```
 
@@ -234,14 +234,14 @@ JavaScript 中的类型转换规则如下：
 
 ```js
 2 == true; // false
-'2' == true; // false
-'1' == true; // true
+"2" == true; // false
+"1" == true; // true
 ```
 
 - 简单类型与引用类型比较，对象转化成其原始类型的值通过 `valueOf` 或者 `toString` 函数，再比较
 
 ```js
-let a = { name: 'Jack', age: 18 };
+let a = { name: "Jack", age: 18 };
 Object.prototype.valueOf = () => 1;
 a == 1; // true
 ```
@@ -289,7 +289,7 @@ JavaScript 数据类型有两种：基本类型和引用类型。
 
 ```js
 function deepCopy(data) {
-  if (typeof data !== 'object' || data === null) {
+  if (typeof data !== "object" || data === null) {
     // typeof null 的结果是 object
     return data;
   }
@@ -297,7 +297,7 @@ function deepCopy(data) {
   for (let key in data) {
     // for...in 会遍历obj原型上的属性，因此需要用hasOwnProperty(key)来判断下当前属性是否属于obj
     if (data.hasOwnProperty(key)) {
-      if (typeof data[key] === 'object') {
+      if (typeof data[key] === "object") {
         result[key] = deepCopy(data[key]);
       } else {
         result[key] = data[key];
@@ -370,11 +370,11 @@ function Person(name, age) {
   this.name = name;
   this.age = age;
   this.say = function () {
-    console.log('你好');
+    console.log("你好");
   };
 }
 Person.prototype.sing = function () {
-  console.log('唱歌');
+  console.log("唱歌");
 };
 
 function Student(name, age, score) {
@@ -382,7 +382,7 @@ function Student(name, age, score) {
   this.score = score;
 }
 
-const jack = new Student('Jack', 18, 100);
+const jack = new Student("Jack", 18, 100);
 console.log(jack.name); // Jack
 jack.say(); // 你好
 jack.sing(); // 无结果，Student没有继承Person原型上的方法
@@ -401,10 +401,10 @@ Student.prototype = Person.prototype; // - 原始版 缺陷：Student的原型�
 
 ```js
 Student.prototype.dance = function () {
-  console.log('跳舞');
+  console.log("跳舞");
 };
 
-const jack = new Person('Jack', 18);
+const jack = new Person("Jack", 18);
 jack.dance(); // 跳舞    Person的原型上是没有dance方法的。这里是因为我们扩展了Student的原型导致Person原型变化
 ```
 
@@ -426,11 +426,11 @@ function Person(name, age) {
   this.name = name;
   this.age = age;
   this.say = function () {
-    console.log('你好');
+    console.log("你好");
   };
 }
 Person.prototype.sing = function () {
-  console.log('唱歌');
+  console.log("唱歌");
 };
 
 function Student(name, age, score) {
@@ -450,11 +450,11 @@ function Person(name, age) {
   this.name = name;
   this.age = age;
   this.say = function () {
-    console.log('你好');
+    console.log("你好");
   };
 }
 Person.prototype.sing = function () {
-  console.log('唱歌');
+  console.log("唱歌");
 };
 
 function Student(name, age, score) {
@@ -506,7 +506,7 @@ foo(); // window or global
 const obj = {
   foo() {
     console.log(this);
-  }
+  },
 };
 
 obj.foo(); // obj
@@ -517,7 +517,7 @@ function Person(name) {
   this.name = name;
 }
 
-const person = new Person('Alice');
+const person = new Person("Alice");
 console.log(person.name); // Alice
 ```
 
@@ -528,7 +528,7 @@ function foo() {
   console.log(this);
 }
 
-const obj = { name: 'Alice' };
+const obj = { name: "Alice" };
 
 foo.call(obj); // obj
 foo.apply(obj); // obj
@@ -546,7 +546,7 @@ const obj = {
       console.log(this);
     };
     arrow.call(window);
-  }
+  },
 };
 
 obj.foo(); // obj
@@ -601,12 +601,12 @@ typeof 运算符用于判断一个变量的数据类型，它返回一个字符�
 
 ```js
 typeof 123; // "number"
-typeof 'hello'; // "string"
+typeof "hello"; // "string"
 typeof true; // "boolean"
 typeof undefined; // "undefined"
 typeof null; // "object"
 typeof [1, 2, 3]; // "object"
-typeof { name: 'Tom', age: 18 }; // "object"
+typeof { name: "Tom", age: 18 }; // "object"
 typeof function () {}; // "function"
 ```
 
@@ -618,13 +618,13 @@ typeof function () {}; // "function"
 var arr = [1, 2, 3];
 arr instanceof Array; // true
 
-var person = { name: 'Tom', age: 18 };
+var person = { name: "Tom", age: 18 };
 person instanceof Object; // true
 
 function Animal(name) {
   this.name = name;
 }
-var cat = new Animal('Kitty');
+var cat = new Animal("Kitty");
 cat instanceof Animal; // true
 ```
 
@@ -649,7 +649,7 @@ function Person(name, age) {
   this.name = name;
   this.age = age;
 }
-var person = new Person('Tom', 18);
+var person = new Person("Tom", 18);
 console.log(person.name); // "Tom"
 console.log(person.age); // 18
 ```
@@ -703,19 +703,19 @@ function ajax(url, method, data, success, error) {
     }
   };
   xhr.open(method, url, true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.setRequestHeader("Content-Type", "application/json");
   xhr.send(JSON.stringify(data));
 }
 
 ajax(
-  '/api/login',
-  'POST',
-  { username: 'Tom', password: '123456' },
+  "/api/login",
+  "POST",
+  { username: "Tom", password: "123456" },
   function (response) {
-    console.log('登录成功：' + response);
+    console.log("登录成功：" + response);
   },
   function (status) {
-    console.log('登录失败：' + status);
+    console.log("登录失败：" + status);
   }
 );
 ```
@@ -806,9 +806,59 @@ history 对象：表示浏览器的历史记录，包括前进、后退、跳转
 
 ## 24. 说说 JavaScript 中内存泄漏的几种情况？
 
+JavaScript 内存泄漏指的是在 JavaScript 程序中，分配的内存空间没有及时释放，导致内存占用不断增加，最终导致程序运行缓慢甚至崩溃的问题。简而言之，就是程序不再使用某个内存块时，没有及时释放它，导致该内存块一直被占用。
+
+JavaScript 内存泄漏可能会发生在以下场景：
+
+全局变量的滥用：在全局作用域中声明的变量，一旦不再使用却没有被删除或被垃圾回收，就会一直占用内存。
+闭包：如果一个闭包引用了外部函数的变量，而这个闭包被保存下来，那么这些变量就无法被垃圾回收，导致内存泄漏。
+定时器和事件监听器的滥用：如果一个定时器或事件监听器注册后没有被正确清除或解绑，就会一直占用内存。
+DOM 元素的滥用：如果创建了大量的 DOM 元素却没有及时删除或被垃圾回收，就会导致内存占用不断增加。
+解决 JavaScript 内存泄漏的方法包括：
+
+使用 let 或 const 关键字声明变量，避免使用全局变量。
+在不再需要的变量或对象上调用 delete 或 null，让它们脱离引用链，被垃圾回收。
+在定时器或事件监听器注册后，一定要正确清除或解绑。
+在创建大量的 DOM 元素时，使用对象池等技术来重复利用对象，避免频繁创建和销毁对象。
+除此之外，还可以使用浏览器开发者工具的内存分析功能来定位和解决内存泄漏问题。
+
 ## 25. Javascript 本地存储的方式有哪些？区别及应用场景？
 
+在 JavaScript 中，常见的本地存储方式有以下三种：
+
+Cookie
+Cookie 是一种存储在客户端的小型文本文件，可以在客户端和服务器之间传输。通过 JavaScript 可以设置和读取 Cookie，使用简单方便。Cookie 的缺点是存储容量小，只有 4KB 左右，而且每次请求都会将 Cookie 附加在请求头中，对网络性能有一定的影响。在应用场景方面，Cookie 可以用于存储用户的登录信息、购物车信息等。
+
+Local Storage
+Local Storage 是 HTML5 中新增的一种本地存储方式，可以存储大量数据，最大容量一般为 5MB 左右。Local Storage 是基于键值对存储数据的，支持字符串类型、数字类型和布尔类型等简单类型。Local Storage 使用简单，可以在客户端通过 JavaScript API 进行读写操作，适用于存储应用程序中的用户设置、用户数据等。
+
+Session Storage
+Session Storage 也是 HTML5 中新增的一种本地存储方式，与 Local Storage 类似，但是它存储的数据只在会话期间有效，会话结束后数据会自动清除。Session Storage 的存储容量也比 Local Storage 小，一般为 5MB 左右。Session Storage 与 Local Storage 的应用场景类似，但是更适用于存储一些敏感数据，如用户身份信息等。
+
+除了上述三种方式，还可以使用 IndexedDB、Web SQL 等技术进行本地存储。这些技术支持更复杂的数据类型和数据结构，但是使用相对复杂，需要掌握更多的 API。在应用场景方面，它们适用于存储大量复杂的数据结构，如离线应用程序、在线文件管理等。
+
 ## 26. 说说你对函数式编程的理解？优缺点？
+函数式编程是一种编程范式，它将计算视为函数之间的数学关系，避免了状态和可变数据的概念，注重函数的组合和应用，通过纯函数和不可变数据结构来实现计算。函数式编程的主要特点是函数的“无副作用”和“不可变性”。
+
+函数式编程的优点：
+
+可维护性：函数式编程中的函数由于不依赖外部状态，所以更加易于维护和测试。
+
+可读性：函数式编程中的函数对于输入和输出的类型有严格的限制，这使得函数更加易于阅读和理解。
+
+可重用性：函数式编程中的函数是独立的模块，可组合和重用，因此在开发中可以提高代码的复用率。
+
+鲁棒性：函数式编程中避免了状态和可变数据的概念，从而减少了程序的副作用和错误发生的可能性。
+
+函数式编程的缺点：
+
+学习难度高：函数式编程范式有着较高的学习曲线，需要开发人员掌握函数式编程中的一些概念和技巧。
+
+性能问题：函数式编程中的函数一般使用不可变数据结构，这可能会导致在一些情况下的性能问题。
+
+不适合所有问题：函数式编程适用于处理某些类型的问题，但并不是所有问题都适用于函数式编程的解决方案。
+
+总之，函数式编程的优点在于它能提高代码的可维护性、可读性和可重用性，同时也能减少程序的副作用和错误发生的可能性。但是，它也存在一些缺点，例如学习难度高、性能问题和不适合所有问题。在实际应用中，需要根据具体情况选择是否使用函数式编程范式。
 
 ## 27. Javascript 中如何实现函数缓存？函数缓存有哪些应用场景？
 
