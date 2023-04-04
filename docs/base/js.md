@@ -643,10 +643,11 @@ cat instanceof Animal; // true
 
 JavaScript 中的 new 操作符用于创建一个对象，并调用一个函数作为该对象的构造函数。new 操作符的具体步骤如下：
 
-创建一个新对象。
-将该新对象的 proto 属性指向构造函数的 prototype 属性。
-将构造函数的 this 指向该新对象。
-执行构造函数中的代码，如果构造函数有返回值并且返回值是一个对象，则返回该对象，否则返回该新对象。
+1. 创建一个新对象。
+2. 将该新对象的 proto 属性指向构造函数的 prototype 属性。
+3. 将构造函数的 this 指向该新对象。
+4. 执行构造函数中的代码，如果构造函数有返回值并且返回值是一个对象，则返回该对象，否则返回该新对象。
+
 具体来说，new 操作符的作用是将一个函数作为构造函数，创建一个新对象，并将该对象作为函数的 this 对象，然后执行函数中的代码。在函数中，可以通过 this 对象来访问和修改新对象的属性和方法。
 
 例如，下面是一个使用 new 操作符创建对象的例子：
@@ -666,12 +667,6 @@ console.log(person.age); // 18
 需要注意的是，new 操作符只能用于构造函数，如果用于普通函数或其他类型的对象，会抛出一个 TypeError 异常。
 
 总之，JavaScript 中的 new 操作符用于创建一个对象，并调用一个函数作为该对象的构造函数。new 操作符的作用是将一个函数作为构造函数，创建一个新对象，并将该对象作为函数的 this 对象，然后执行函数中的代码。
-
-1. 创建一个空对象
-2. 由 this 变量引用该对象
-3. 该对象继承构造函数的原型（更改 this 指向）
-4. 把属性和方法加入到 this 引用的对象
-5. 最后隐式的返回 this
 
 ```js
 let obj = {};
@@ -733,15 +728,45 @@ ajax(
 
 ## 18. bind、call、apply 区别？如何实现一个 bind?
 
-call, apply 和 bind 是 Function 原型上的三个方法，都是为了改变函数体内部 this 的指向。
+bind、call 和 apply 都是 JavaScript 中用于改变函数执行上下文的方法。它们的主要区别在于传递参数的方式不同。具体来说：
 
-call、apply、bind 三者第一个参数都是 this 要指向的对象，后面的参数 call 是一个个的参数列表，apply 则是放到数组中的
+call 和 apply 都是立即调用函数，而且可以指定函数执行时的 this 值和参数列表。它们的区别在于传递参数的方式不同：call 方法接收一个参数列表，apply 方法接收一个参数数组。
 
-bind 是返回一个函数，便于稍后调用。call, apply 则是立即调用
+bind 方法不会立即调用函数，而是返回一个新函数，新函数的 this 值被绑定到指定的对象，参数列表与原函数相同。新函数可以在稍后调用，调用时会执行原函数，并使用绑定的 this 值和参数列表。
+
+下面是一个实现 bind 方法的示例：
+
+```js
+Function.prototype.myBind = function (context) {
+  var self = this;
+  var args = Array.prototype.slice.call(arguments, 1);
+  return function () {
+    var bindArgs = Array.prototype.slice.call(arguments);
+    self.apply(context, args.concat(bindArgs));
+  };
+};
+```
+
+这个实现的核心是返回一个新函数，新函数内部调用原函数，并使用 apply 方法将 this 值绑定到指定的对象，并将参数列表合并。注意，这个实现还使用了 slice 方法来将 arguments 对象转换为数组，以便更方便地操作参数列表。
+
+使用这个实现，可以将一个函数绑定到指定的对象上，例如：
+
+```js
+var obj = { name: 'John' };
+
+function sayHello(greeting) {
+  console.log(greeting + ', ' + this.name + '!');
+}
+
+var hello = sayHello.myBind(obj, 'Hello');
+hello(); // 输出 "Hello, John!"
+```
+
+在这个示例中，sayHello 函数被绑定到 obj 对象上，并使用 myBind 方法返回了一个新函数 hello。调用 hello 函数时，会输出 "Hello, John!"。
 
 ## 19. 说说你对正则表达式的理解？应用场景？
 
-正则表达式（Regular Expression）是一种用于匹配字符串模式的表达式，它可以用来检查、替换和提取字符串中符合条件的部分。正则表达式是一种强大而灵活的工具，可以用于各种编程语言和操作系统中，例如 JavaScript、Python、Java、PHP、Linux 等。
+正则表达式（Regular Expression）是一种用于匹配字符串模式的表达式，它可以用来检查、替换和提取字符串中符合条件的部分。
 
 正则表达式的基本语法由一些特殊字符和普通字符组成，这些字符用于表示匹配规则，例如：
 
