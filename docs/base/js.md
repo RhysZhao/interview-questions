@@ -671,37 +671,33 @@ cat instanceof Animal; // true
 
 ## 16. 说说 new 操作符具体干了什么？
 
-JavaScript 中的 new 操作符用于创建一个对象，并调用一个函数作为该对象的构造函数。new 操作符的具体步骤如下：
+new 操作符用于创建一个实例对象。new 主要做了一下内容：
 
 1. 创建一个新对象。
 2. 将该新对象的 proto 属性指向构造函数的 prototype 属性。
 3. 将构造函数的 this 指向该新对象。
 4. 执行构造函数中的代码，如果构造函数有返回值并且返回值是一个对象，则返回该对象，否则返回该新对象。
 
-具体来说，new 操作符的作用是将一个函数作为构造函数，创建一个新对象，并将该对象作为函数的 this 对象，然后执行函数中的代码。在函数中，可以通过 this 对象来访问和修改新对象的属性和方法。
-
-例如，下面是一个使用 new 操作符创建对象的例子：
+下面是一个手写 new 的例子：
 
 ```js
 function Person(name, age) {
   this.name = name;
   this.age = age;
 }
-var person = new Person('Tom', 18);
-console.log(person.name); // "Tom"
-console.log(person.age); // 18
-```
 
-在这个例子中，我们定义了一个 Person 构造函数，然后使用 new 操作符创建一个新对象 person，该对象的 name 和 age 属性分别为 "Tom" 和 18。
+const jack = new Person('jack', 18);
+console.log('object :>> jack', jack);
 
-需要注意的是，new 操作符只能用于构造函数，如果用于普通函数或其他类型的对象，会抛出一个 TypeError 异常。
+function newPerson(...args) {
+  const instance = {};
+  instance.__proto__ = Person.prototype;
+  Person.call(instance, ...args);
+  return instance;
+}
 
-总之，JavaScript 中的 new 操作符用于创建一个对象，并调用一个函数作为该对象的构造函数。new 操作符的作用是将一个函数作为构造函数，创建一个新对象，并将该对象作为函数的 this 对象，然后执行函数中的代码。
-
-```js
-let obj = {};
-obj.__proto__ = Person.prototype;
-Person.call(obj);
+const jim = newPerson('jim', 18);
+console.log('object :>> jim', jim);
 ```
 
 ## 17. ajax 原理是什么？如何实现？
@@ -817,33 +813,23 @@ hello(); // 输出 "Hello, John!"
 
 ## 20. 说说你对事件循环的理解
 
-js 执行时，遇到同步任务，就将同步任务按照执行顺序排列到执行栈中。
-遇到异步任务，会将此类异步任务挂起，继续执行执行栈中的任务。等异步任务返回结果后，再按照顺序排列到事件队列中。
-主线程先将执行栈中的同步任务清空，然后检查事件队列中是否有任务，如果有，就将第一个事件对应的回调推到执行栈中执行，若在执行过程中遇到异步任务，则继续将这个异步任务排列到事件队列中。
-主线程每次将执行栈清空后，就去事件队列中检查是否有任务，如果有，就每次取出一个推到执行栈中执行，这个循环往复的过程被称为“Event Loop 事件循环”。
+JavaScript 中的事件循环（Event Loop）是一种机制，用于调度和执行异步任务。事件循环会不断地从任务队列中取出任务并执行，直到任务队列为空为止。在事件循环中，任务被分为两类：宏任务和微任务。
 
-宏任务、微任务：
-JavaScript 中的任务分为宏任务和微任务两种类型，它们的执行顺序有所不同。
+宏任务（Macrotask）是指较大的任务，如 I/O 操作、定时器等。当一个宏任务执行完毕后，会将其中产生的微任务全部执行完毕后再取出一个宏任务执行。主要包括有`setTimeout`, `setInterval`, `requestAnimationFrame`
 
-宏任务（Macrotask）包括以下几种：
+微任务（Microtask）是指较小的任务，如 Promise 回调函数、MutationObserver 回调函数等。当一个微任务被添加到任务队列中时，它会在当前宏任务执行完毕后立即执行。主要包括`promise.then`, `mutationObserver`
 
-script（整体代码）
-setTimeout、setInterval、setImmediate
-I/O 操作、UI 渲染
-Ajax 请求、fetch 请求、WebSocket 请求等网络请求操作
-MessageChannel、postMessage、MessagePort 等异步通信操作
-宏任务是由 JavaScript 引擎的宿主环境（例如浏览器、Node.js）提供的，它们的执行顺序是由事件循环（Event Loop）控制的。当主线程执行完一个宏任务后，事件循环会从宏任务队列中取出下一个宏任务执行，直到宏任务队列为空为止。
+事件循环的执行过程如下：
 
-微任务（Microtask）包括以下几种：
+执行当前宏任务（如 script 脚本）。
 
-Promise.then() 和 Promise.catch()
-process.nextTick（Node.js 环境）
-MutationObserver（浏览器环境）
-微任务是在宏任务执行完毕后，立即执行的任务。当主线程执行完一个宏任务后，如果宏任务中产生了微任务，事件循环会将微任务放入微任务队列中，然后继续执行下一个宏任务。当宏任务队列为空时，事件循环会依次执行微任务队列中的任务，直到微任务队列为空为止。
+检查微任务队列是否为空，如果不为空，依次执行微任务，直到微任务队列为空为止。
 
-需要注意的是，微任务的执行顺序优先于宏任务，也就是说，当主线程执行完一个宏任务后，先执行微任务队列中的任务，然后再执行下一个宏任务。因此，如果在微任务中产生了新的微任务，也会在当前宏任务执行完毕后立即执行。
+从宏任务队列中取出一个任务并执行，直到宏任务队列为空或者达到了某个限制（如执行时间超时）为止。
 
-总之，JavaScript 中的任务分为宏任务和微任务两种类型，它们的执行顺序有所不同。宏任务包括 script、setTimeout、setInterval、I/O 操作、Ajax 请求等，微任务包括 Promise、process.nextTick、MutationObserver 等。微任务的执行顺序优先于宏任务，也就是说，在当前宏任务执行完毕后，先执行微任务队列中的任务，然后再执行下一个宏任务。
+如果宏任务队列为空，返回第二步，否则返回第三步。
+
+需要注意的是，在同一次事件循环中，微任务的执行优先级高于宏任务。也就是说，当一个宏任务执行完毕后，会先执行其中产生的所有微任务，再去执行下一个宏任务。
 
 ## 21. DOM 常见的操作有哪些？
 
