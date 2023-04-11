@@ -585,13 +585,7 @@ obj.foo(); // obj
 
 ## 12. JavaScript 中执行上下文和执行栈是什么？
 
-在 JavaScript 中，执行上下文（Execution Context）是指 JavaScript 引擎在执行代码时所创建的一个抽象概念，它包含了当前代码执行时所需的所有信息，如变量、函数、作用域等。执行上下文可以理解为一个对象，它有三个重要的属性：变量对象、作用域链和 this 值。
-
-执行栈（Execution Stack）是指 JavaScript 引擎在执行代码时所使用的一种数据结构，它是一个后进先出（LIFO）的栈，用于存储所有执行上下文。每当 JavaScript 引擎执行一个函数时，都会创建一个新的执行上下文，并将其推入执行栈的顶部。当函数执行完毕后，它的执行上下文会从执行栈中弹出，控制权会回到上一个执行上下文。
-
-执行栈的作用是维护代码执行的顺序和执行上下文的创建和销毁。它保证了当前正在执行的代码具有正确的执行上下文和作用域，使得 JavaScript 引擎能够正确地执行代码。
-
-执行上下文是 JavaScript 引擎在执行代码时所创建的一个抽象概念。每当 JavaScript 引擎开始执行一个函数或全局代码时，都会创建一个新的执行上下文。执行上下文可以理解为一个对象，它包含了当前代码执行时所需的所有信息，如变量、函数、作用域等。每个执行上下文都有三个重要的属性：
+执行上下文是 JavaScript 引擎在执行代码时所创建的一个抽象概念。每当 JavaScript 引擎开始执行一个函数或全局代码时，都会创建一个新的执行上下文。执行上下文可以理解为一个对象，它包含了当前代码执行时所需的所有信息。每个执行上下文都有三个重要的属性：
 
 1. 变量对象（Variable Object）：用于存储函数内部的变量和函数声明。对于全局执行上下文来说，变量对象就是全局对象。
 
@@ -833,6 +827,16 @@ JavaScript 中的事件循环（Event Loop）是一种机制，用于调度和�
 
 ## 21. DOM 常见的操作有哪些？
 
+DOM（文档对象模型）是指 HTML 和 XML 文档的编程接口，它定义了访问和操作 HTML 和 XML 文档的标准方法。常见的 DOM 操作包括：
+
+1. 获取元素：通过 ID、class、标签名等方式获取元素，如 getElementById、getElementsByClassName、getElementsByTagName 等。
+2. 修改元素：修改元素的内容、样式、属性等，如 innerHTML、innerText、style、setAttribute 等。
+3. 添加元素：添加新元素到文档中，如 createElement、appendChild、insertBefore 等。
+4. 删除元素：从文档中删除元素，如 removeChild、remove 等。
+5. 事件处理：对元素添加事件监听器，如 addEventListener、removeEventListener 等。
+6. 遍历节点树：遍历文档中的节点树结构，如 parentNode、childNodes、nextSibling 等。
+   这些操作是 DOM 编程中最基本和常用的操作，通过它们可以实现对文档的访问和修改，从而实现动态交互效果。
+
 ## 22. 说说你对 BOM 的理解，常见的 BOM 对象你了解哪些？
 
 BOM（Browser Object Model）是浏览器对象模型的简称，它提供了一组 JavaScript 对象，用于操作浏览器窗口和浏览器本身。BOM 对象的主要作用是与用户界面交互，包括控制浏览器窗口、对话框、处理用户输入等。
@@ -852,35 +856,74 @@ history 对象：表示浏览器的历史记录，包括前进、后退、跳转
 
 ## 23. 举例说明你对尾递归的理解，有哪些应用场景
 
+尾递归是指在递归算法中，递归调用是函数体中的最后一个操作，也就是说，在递归调用后再无其他操作。这种情况下，编译器或解释器可以对递归进行优化，使得递归的空间复杂度降为 O(1)。
+
+举个例子，比如计算斐波那契数列的第 n 个数，可以使用递归算法实现：
+
+```js
+function fibonacci(n) {
+  if (n <= 1) {
+    return n;
+  }
+  return fibonacci(n - 1) + fibonacci(n - 2);
+}
+```
+
+但是，这种实现方式会导致空间复杂度为 O(n)，因为每次递归调用都会在内存中创建一个新的函数调用栈。如果使用尾递归实现，空间复杂度就可以降为 O(1)：
+
+```js
+function fibonacci(n, prev = 0, next = 1) {
+  if (n === 0) {
+    return prev;
+  }
+  return fibonacci(n - 1, next, prev + next);
+}
+```
+
+在这个实现中，每次递归调用都是函数体中的最后一个操作，因此编译器可以对其进行优化，使得递归的空间复杂度为 O(1)。
+
+尾递归除了可以优化递归算法的空间复杂度，还可以用于实现函数式编程中的一些高阶函数，比如 map、reduce 和 filter 等。这些函数都可以使用尾递归实现，从而避免了中间过程中的大量内存占用。
+
 ## 24. 说说 JavaScript 中内存泄漏的几种情况？
 
 JavaScript 内存泄漏指的是在 JavaScript 程序中，分配的内存空间没有及时释放，导致内存占用不断增加，最终导致程序运行缓慢甚至崩溃的问题。简而言之，就是程序不再使用某个内存块时，没有及时释放它，导致该内存块一直被占用。
 
 JavaScript 内存泄漏可能会发生在以下场景：
 
-全局变量的滥用：在全局作用域中声明的变量，一旦不再使用却没有被删除或被垃圾回收，就会一直占用内存。
-闭包：如果一个闭包引用了外部函数的变量，而这个闭包被保存下来，那么这些变量就无法被垃圾回收，导致内存泄漏。
-定时器和事件监听器的滥用：如果一个定时器或事件监听器注册后没有被正确清除或解绑，就会一直占用内存。
-DOM 元素的滥用：如果创建了大量的 DOM 元素却没有及时删除或被垃圾回收，就会导致内存占用不断增加。
+1. **全局变量的滥用**：在全局作用域中声明的变量，一旦不再使用却没有被删除或被垃圾回收，就会一直占用内存。
+
+2. **闭包**：如果一个闭包引用了外部函数的变量，而这个闭包被保存下来，那么这些变量就无法被垃圾回收，导致内存泄漏。
+
+3. **定时器和事件监听器的滥用**：如果一个定时器或事件监听器注册后没有被正确清除或解绑，就会一直占用内存。
+
+4. **DOM 元素的滥用**：如果创建了大量的 DOM 元素却没有及时删除或被垃圾回收，就会导致内存占用不断增加。
+
 解决 JavaScript 内存泄漏的方法包括：
 
-使用 let 或 const 关键字声明变量，避免使用全局变量。
-在不再需要的变量或对象上调用 delete 或 null，让它们脱离引用链，被垃圾回收。
-在定时器或事件监听器注册后，一定要正确清除或解绑。
-在创建大量的 DOM 元素时，使用对象池等技术来重复利用对象，避免频繁创建和销毁对象。
+1. 使用 let 或 const 关键字声明变量，避免使用全局变量。
+
+2. 在不再需要的变量或对象上调用 delete 或 null，让它们脱离引用链，被垃圾回收。
+
+3. 在定时器或事件监听器注册后，一定要正确清除或解绑。
+
+4. 在创建大量的 DOM 元素时，使用对象池等技术来重复利用对象，避免频繁创建和销毁对象。
+
 除此之外，还可以使用浏览器开发者工具的内存分析功能来定位和解决内存泄漏问题。
 
 ## 25. Javascript 本地存储的方式有哪些？区别及应用场景？
 
 在 JavaScript 中，常见的本地存储方式有以下三种：
 
-Cookie
+1. Cookie
+
 Cookie 是一种存储在客户端的小型文本文件，可以在客户端和服务器之间传输。通过 JavaScript 可以设置和读取 Cookie，使用简单方便。Cookie 的缺点是存储容量小，只有 4KB 左右，而且每次请求都会将 Cookie 附加在请求头中，对网络性能有一定的影响。在应用场景方面，Cookie 可以用于存储用户的登录信息、购物车信息等。
 
-Local Storage
+2. Local Storage
+
 Local Storage 是 HTML5 中新增的一种本地存储方式，可以存储大量数据，最大容量一般为 5MB 左右。Local Storage 是基于键值对存储数据的，支持字符串类型、数字类型和布尔类型等简单类型。Local Storage 使用简单，可以在客户端通过 JavaScript API 进行读写操作，适用于存储应用程序中的用户设置、用户数据等。
 
-Session Storage
+3. Session Storage
+
 Session Storage 也是 HTML5 中新增的一种本地存储方式，与 Local Storage 类似，但是它存储的数据只在会话期间有效，会话结束后数据会自动清除。Session Storage 的存储容量也比 Local Storage 小，一般为 5MB 左右。Session Storage 与 Local Storage 的应用场景类似，但是更适用于存储一些敏感数据，如用户身份信息等。
 
 除了上述三种方式，还可以使用 IndexedDB、Web SQL 等技术进行本地存储。这些技术支持更复杂的数据类型和数据结构，但是使用相对复杂，需要掌握更多的 API。在应用场景方面，它们适用于存储大量复杂的数据结构，如离线应用程序、在线文件管理等。
@@ -911,11 +954,156 @@ Session Storage 也是 HTML5 中新增的一种本地存储方式，与 Local St
 
 ## 27. Javascript 中如何实现函数缓存？函数缓存有哪些应用场景？
 
+函数缓存是指将函数的计算结果缓存起来，以避免重复计算。可以使用闭包来实现函数缓存。
+
+使用闭包实现函数缓存的代码示例：
+
+```js
+function cacheFunction(fn) {
+  const cache = {};
+  return function (...args) {
+    const key = JSON.stringify(args);
+    if (!cache[key]) {
+      cache[key] = fn.call(this, ...args);
+    }
+    return cache[key];
+  };
+}
+```
+
+返回一个对象更优雅一些：
+
+```js
+function cacheFunction(fn) {
+  const cache = {};
+  return {
+    get(...args) {
+      const key = JSON.stringify(args);
+      if (!cache[key]) {
+        cache[key] = fn.call(this, ...args);
+      }
+      return cache[key];
+    },
+    // 清除缓存
+    clear() {
+      Object.keys(cache).map((key) => delete cache[key]);
+    }
+  };
+}
+```
+
+函数缓存的应用场景包括：
+
+1. 计算密集型任务：如果函数需要进行大量计算，可以使用函数缓存来避免重复计算，提高性能。
+2. 数据请求：如果函数需要从服务器获取数据，可以使用函数缓存来避免重复请求，减少网络请求次数。
+3. 频繁调用的函数：如果函数需要被频繁调用，可以使用函数缓存来避免重复计算，提高性能。
+
 ## 28. 说说 Javascript 数字精度丢失的问题，如何解决？
+
+JavaScript 中的数字精度丢失问题是因为 JavaScript 内部使用双精度浮点数表示数字。由于双精度浮点数的存储方式，它无法精确表示某些十进制数，从而导致精度丢失。
+
+例如，0.1 + 0.2 的结果在 JavaScript 中为 0.30000000000000004，这是因为 0.1 和 0.2 都无法用双精度浮点数精确表示，它们的实际值比它们的二进制表示要稍微大一些。
+
+解决 JavaScript 数字精度丢失问题的方法有以下几种：
+
+1. 使用整数进行计算：将小数转换为整数进行计算，最后再将结果除以 10 的 n 次方，其中 n 为小数位数。例如，0.1 + 0.2 可以转换为 1 + 2 = 3，最后再除以 10 的 1 次方，得到 0.3。
+
+2. 使用第三方库：例如 decimal.js 和 big.js 等库，它们提供了高精度计算的功能，可以避免 JavaScript 数字精度丢失的问题。
+
+3. 使用 toFixed 方法：toFixed 方法可以将数字转换为指定小数位数的字符串，从而避免精度丢失。例如，(0.1 + 0.2).toFixed(1) 的结果为 "0.3"。
+
+需要注意的是，使用整数进行计算虽然可以避免数字精度丢失的问题，但是也会导致整数溢出的问题，因此需要注意计算结果是否超出了 JavaScript 的安全整数范围。
 
 ## 29. 什么是防抖和节流？有什么区别？如何实现？
 
+防抖和节流是两种常见的性能优化方法，用于控制函数被频繁触发时的执行次数和频率。
+
+防抖和节流的区别在于：
+
+- 防抖：在事件被触发 n 秒后再执行回调函数，如果在这 n 秒内又被触发，则重新计时。也就是说，当事件被触发后，函数并不会立即执行，而是等待一定时间后再执行。如果在这个时间内再次触发了该事件，则重新计时。
+
+- 节流：在一定时间内只触发一次回调函数。也就是说，当事件被触发后，函数会立即执行，然后在一定时间内禁止再次触发该函数。等过了这个时间后，才能重新触发执行。
+  防抖和节流的实现方法如下：
+
+防抖的实现：
+
+```js
+function debounce(fn, wait) {
+  let timer = null;
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      fn.call(this, ...args);
+    }, wait);
+  };
+}
+```
+
+节流的实现：
+
+```js
+function throttle(fn, wait) {
+  let lastTime = Date.now();
+  return function (...args) {
+    let nowTime = Date.now();
+    if (nowTime - lastTime > wait) {
+      fn.call(this, ...args);
+      lastTime = nowTime;
+    }
+  };
+}
+```
+
+其中，fn 是需要进行防抖或节流的函数，wait 是等待时间。
+
+防抖和节流的应用场景如下：
+
+- 防抖：输入框搜索、窗口大小改变等需要等待一定时间才能执行的操作。
+
+- 节流：滚动加载、窗口大小改变等需要控制执行频率的操作。
+
 ## 30. 如何判断一个元素是否在可视区域中？
+
+判断一个元素是否在可视区域中，可以通过以下两种方法实现：
+
+1. getBoundingClientRect 方法
+
+可以使用元素的 getBoundingClientRect 方法获取元素相对于视口的位置和大小，从而计算出元素是否在可视区域中。具体实现代码如下：
+
+```js
+function isInViewport(element) {
+  const rect = element.getBoundingClientRect();
+  return (
+    rect.top >= 0 &&
+    rect.left >= 0 &&
+    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  );
+}
+```
+
+其中，element 是需要判断的元素。
+
+2. Intersection Observer API
+
+Intersection Observer API 是浏览器提供的一种用于监听元素与视口交叉状态的 API，可以用于判断元素是否在可视区域中。具体实现代码如下：
+
+```js
+function isInViewport(element) {
+  const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      console.log('Element is in viewport');
+    } else {
+      console.log('Element is not in viewport');
+    }
+  });
+  observer.observe(element);
+}
+```
+
+其中，element 是需要判断的元素。
+
+需要注意的是，使用 getBoundingClientRect 方法和 Intersection Observer API 都可以判断元素是否在可视区域中，但是它们的实现原理和适用场景有所不同。getBoundingClientRect 方法适用于需要实时判断元素是否在可视区域中的情况，而 Intersection Observer API 则适用于需要监听元素与视口交叉状态的情况。
 
 ## 31. 大文件上传如何做断点续传？
 
@@ -924,3 +1112,27 @@ Session Storage 也是 HTML5 中新增的一种本地存储方式，与 Local St
 ## 33. 什么是单点登录？如何实现？
 
 ## 34. web 常见的攻击方式有哪些？如何防御？
+
+Web 应用程序常见的攻击方式包括：
+
+1. SQL 注入攻击：攻击者通过在输入框中注入恶意 SQL 代码，从而执行未经授权的数据库操作。
+
+2. XSS 攻击：攻击者通过在 Web 页面中注入恶意脚本代码，从而获取用户的敏感信息或者在用户浏览器中执行任意操作。
+
+3. CSRF 攻击：攻击者通过伪造用户的请求，从而利用用户的身份进行未经授权的操作。
+
+4. 文件上传漏洞：攻击者通过上传恶意文件，从而执行任意代码或者获取系统权限。
+
+5. 逻辑漏洞：攻击者通过利用程序逻辑错误，从而达到未经授权的访问或者操作。
+
+防御这些攻击的方法包括：
+
+1. SQL 注入攻击：使用参数化查询或存储过程，避免直接拼接 SQL 语句；过滤用户输入，避免特殊字符注入。
+
+2. XSS 攻击：使用 HTML 编码或者转义用户输入，避免恶意脚本执行；设置 HttpOnly 标志，避免恶意脚本获取用户 Cookie。
+
+3. CSRF 攻击：使用随机 token 或者验证码，避免伪造用户请求；检查 Referer 头，避免跨站点请求伪造。
+
+4. 文件上传漏洞：限制上传文件的类型和大小，避免上传恶意文件；对上传文件进行恶意代码扫描，避免执行恶意代码。
+
+5. 逻辑漏洞：对程序逻辑进行安全审计，避免存在漏洞；使用访问控制和权限控制，避免未经授权的访问和操作。
