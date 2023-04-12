@@ -102,10 +102,33 @@ Array.prototype.fill = function (value) {
 ## 9. reduce
 
 ```js
+Array.prototype.reduce = function (callback, initValue) {
+  let preValue = initValue || this[0];
+  let i = initValue ? 0 : 1;
 
+  for (len = this.length; i < len; i++) {
+    preValue = callback(preValue, this[i], i, this);
+  }
+  return preValue;
+};
 ```
 
-## 10. flat
+## 10. flat(depth)
+
+```js
+Array.prototype.flat = function (depth) {
+  let result = this;
+  while (depth > 0) {
+    result = [].concat(...result);
+    depth = depth - 1;
+    // 没有数组则不等depth减为0就退出循环
+    if (result.every((item) => !Array.isArray(item))) {
+      break;
+    }
+  }
+  return result;
+};
+```
 
 ## 11. Object.is
 
@@ -136,7 +159,32 @@ function objectCreate(proto) {
 
 ## 14. instanceof
 
+```js
+// 主要是判断obj是否出现在instance的原型链上
+function instanceOf(instance, obj) {
+  let proto = instance.__proto__;
+  while (proto) {
+    if (proto === obj.prototype) {
+      return true;
+    }
+    proto = proto.__proto__;
+  }
+  return false;
+}
+```
+
 ## 15. new 操作符
+
+```js
+function myNew(fn, ...args) {
+  if (typeof fn !== 'function') {
+    throw new TypeError('fn必须是函数类型');
+  }
+  let result = Object.create(fn.prototype);
+  fn.call(result, ...args);
+  return result;
+}
+```
 
 ## 16. call
 
@@ -233,6 +281,23 @@ function cloneDeep(obj) {
 
 ## 22. 函数柯里化
 
+```js
+function currying(fn, ...args) {
+  return function (...args2) {
+    let argsAll = [...args, ...args2];
+    return argsAll.length >= fn.length ? fn.call(this, ...argsAll) : currying.call(this, fn, ...argsAll);
+  };
+}
+```
+
+或
+
+```js
+function currying(fn, ...args) {
+  return args.length >= fn.length ? fn(...args) : currying.bind(null, fn, ...args);
+}
+```
+
 ## 23. 寄生组合继承
 
 ```js
@@ -265,8 +330,6 @@ Student.prototype.constructor = Student;
 
 ## 28. Promise.any
 
-## 29. async...await
+## 29. 实现 ajax 请求
 
-## 30. 实现 ajax 请求
-
-## 31. 使用 Promise 封装 ajax 请求
+## 30. 使用 Promise 封装 ajax 请求
