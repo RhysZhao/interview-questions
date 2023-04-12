@@ -266,3 +266,7 @@ Student.prototype.constructor = Student;
 ## 28. Promise.any
 
 ## 29. async...await
+
+## 30. 实现 ajax 请求
+
+## 31. 使用 Promise 封装 ajax 请求
