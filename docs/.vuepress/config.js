@@ -2,7 +2,7 @@
  * Author  rhys.zhao
  * Date  2023-03-02 14:02:43
  * LastEditors  rhys.zhao
- * LastEditTime  2023-04-11 11:32:41
+ * LastEditTime  2023-04-12 11:00:22
  * Description
  */
 
@@ -55,7 +55,8 @@ module.exports = {
             '/base/webpack.md',
             '/base/design-mode.md',
             '/base/git.md',
-            '/base/algorithm.md'
+            '/base/algorithm.md',
+            '/base/code.md'
           ]
         }
       ],
