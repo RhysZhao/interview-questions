@@ -540,7 +540,7 @@ function ajax(url, method, data, success, error) {
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
+      if (xhr.status >= 200 && xhr.status < 300) {
         success(xhr.responseText);
       } else {
         error(xhr.status);
@@ -574,7 +574,7 @@ const ajaxPromise = (url, method, data) => {
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = () => {
       if (xhr.readyState == 4) {
-        if (xhr.status === 200) {
+        if (xhr.status >= 200 && xhr.status < 300) {
           resolve(xhr.responseText);
         } else {
           reject(xhr.status);
