@@ -2,7 +2,7 @@
  * Author  rhys.zhao
  * Date  2023-03-02 15:12:45
  * LastEditors  rhys.zhao
- * LastEditTime  2023-04-10 16:32:15
+ * LastEditTime  2023-04-12 19:15:04
  * Description
 -->
 
@@ -22,6 +22,9 @@
 引导话题：
 
 主动表现自己。不聊自己擅长的，面试官就占据主导权了。
+
+回答问题：
+讲概念、说用途、优缺点、应用场景、尽可能多的扩展
 
 ## 二面
 
