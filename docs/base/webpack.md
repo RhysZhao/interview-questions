@@ -2,7 +2,7 @@
  * Author  rhys.zhao
  * Date  2023-01-24 09:48:17
  * LastEditors  rhys.zhao
- * LastEditTime  2023-03-30 14:01:08
+ * LastEditTime  2023-05-04 09:53:40
  * Description webpack面试题
 -->
 
@@ -70,44 +70,44 @@ DefinePlugin: 允许在编译时创建配置的全局对象，是一个 webpack 
 
 webpack 基于发布订阅模式，在运行的生命周期中会广播出许多事件，插件通过监听这些事件，就可以在特定的阶段执行自己的插件任务。
 
-```
+```js
 class MyPlugin {
-    // Webpack 会调用 MyPlugin 实例的 apply 方法给插件实例传入 compiler 对象
-  apply (compiler) {
+  // Webpack 会调用 MyPlugin 实例的 apply 方法给插件实例传入 compiler 对象
+  apply(compiler) {
     // 找到合适的事件钩子，实现自己的插件功能
-    compiler.hooks.emit.tap('MyPlugin', compilation => {
-        // compilation: 当前打包构建流程的上下文
-        console.log(compilation);
+    compiler.hooks.emit.tap('MyPlugin', (compilation) => {
+      // compilation: 当前打包构建流程的上下文
+      console.log(compilation);
 
-        // do something...
-    })
+      // do something...
+    });
   }
 }
 ```
 
 对于 loader，实质是一个转换器，将 A 文件进行编译形成 B 文件，操作的是文件，比如将 A.scss 或 A.less 转变为 B.css，单纯的文件转换过程
 
-```
+```js
 // 导出一个函数，source为webpack传递给loader的文件源内容
-module.exports = function(source) {
-    const content = doSomeThing2JsString(source);
+module.exports = function (source) {
+  const content = doSomeThing2JsString(source);
 
-    // 如果 loader 配置了 options 对象，那么this.query将指向 options
-    const options = this.query;
+  // 如果 loader 配置了 options 对象，那么this.query将指向 options
+  const options = this.query;
 
-    // 可以用作解析其他模块路径的上下文
-    console.log('this.context');
+  // 可以用作解析其他模块路径的上下文
+  console.log('this.context');
 
-    /*
-     * this.callback 参数：
-     * error：Error | null，当 loader 出错时向外抛出一个 error
-     * content：String | Buffer，经过 loader 编译后需要导出的内容
-     * sourceMap：为方便调试生成的编译后内容的 source map
-     * ast：本次编译生成的 AST 静态语法树，之后执行的 loader 可以直接使用这个 AST，进而省去重复生成 AST 的过程
-     */
-    this.callback(null, content); // 异步
-    return content; // 同步
-}
+  /*
+   * this.callback 参数：
+   * error：Error | null，当 loader 出错时向外抛出一个 error
+   * content：String | Buffer，经过 loader 编译后需要导出的内容
+   * sourceMap：为方便调试生成的编译后内容的 source map
+   * ast：本次编译生成的 AST 静态语法树，之后执行的 loader 可以直接使用这个 AST，进而省去重复生成 AST 的过程
+   */
+  this.callback(null, content); // 异步
+  return content; // 同步
+};
 ```
 
 ## 6. 说说 webpack 的热更新是如何做到的？原理是什么？
@@ -129,13 +129,13 @@ proxy 工作原理实质上是利用 http-proxy-middleware 这个 http 代理中
 举个例子：
 在开发阶段，本地地址为 http://localhost:3000，该浏览器发送一个前缀带有/api 标识的请求到服务端获取数据，但响应这个请求的服务器只是将请求转发到另一台服务器中
 
-```
+```js
 const express = require('express');
 const proxy = require('http-proxy-middleware');
 
 const app = express();
 
-app.use('/api', proxy({target: 'http://www.example.org', changeOrigin: true}));
+app.use('/api', proxy({ target: 'http://www.example.org', changeOrigin: true }));
 app.listen(3000);
 
 // http://localhost:3000/api/foo/bar -> http://www.example.org/api/foo/bar
@@ -174,13 +174,13 @@ app.listen(3000);
 - 优化 resolve.modules
   resolve.modules 用于配置 webpack 去哪些目录下寻找第三方模块。默认值为['node_modules']，所以默认会从 node_modules 中查找文件
   当安装的第三方模块都放在项目根目录下的 ./node_modules 目录下时，所以可以指明存放第三方模块的绝对路径，以减少寻找，配置如下：
-  ```
+  ```js
   module.exports = {
-  resolve: {
-    // 使用绝对路径指明第三方模块存放的位置，以减少搜索步骤
-    // 其中 __dirname 表示当前工作目录，也就是项目根目录
-    modules: [path.resolve(__dirname, 'node_modules')]
-  },
+    resolve: {
+      // 使用绝对路径指明第三方模块存放的位置，以减少搜索步骤
+      // 其中 __dirname 表示当前工作目录，也就是项目根目录
+      modules: [path.resolve(__dirname, 'node_modules')]
+    }
   };
   ```
 - 优化 resolve.alias
