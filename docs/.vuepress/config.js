@@ -2,7 +2,7 @@
  * Author  rhys.zhao
  * Date  2023-03-02 14:02:43
  * LastEditors  rhys.zhao
- * LastEditTime  2023-05-04 11:07:24
+ * LastEditTime  2023-05-25 11:21:55
  * Description
  */
 
@@ -63,7 +63,13 @@ module.exports = {
       '/senior/': [
         {
           text: '前端进阶',
-          children: ['/senior/README.md', '/senior/v8.md', '/senior/react.md', '/senior/jwt.md']
+          children: [
+            '/senior/README.md',
+            '/senior/v8.md',
+            '/senior/react.md',
+            '/senior/jwt.md',
+            '/senior/react-tutorial.md'
+          ]
         }
       ],
       '/skill/': [
