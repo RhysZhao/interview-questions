@@ -2,7 +2,7 @@
  * Author  rhys.zhao
  * Date  2023-05-04 11:06:39
  * LastEditors  rhys.zhao
- * LastEditTime  2023-05-04 16:25:19
+ * LastEditTime  2023-07-06 15:49:35
  * Description
 -->
 
@@ -28,7 +28,7 @@ cookie 有几个重要的属性，如下：
 - `secure`: 设置为 true 的时候，cookie 在 http 中是无效的
 - `httpOnly`: 设置为 true，无法通过 js 脚本读取到 cookie 的信息
 
-2. js 操作 cookie
+### 2. js 操作 cookie
 
 ```js
 const allCookies = document.cookie; // 获取所有cookie
@@ -36,7 +36,7 @@ document.cookie = 'name=jack'; // 设置cookie
 document.cookie = 'name=jack; Max-Age=0;'; // 删除该cookie
 ```
 
-3. 应用场景
+### 3. 应用场景
 
 - 30 天内免登陆，把用户信息存储在 cookie 里，设置 Max-Age 为 30 天。
 - 配合 sessionId 来实现会话跟踪。
