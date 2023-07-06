@@ -1,0 +1,1 @@
+const e={key:"v-3447ac73",path:"/senior/security.html",title:"\u6D4F\u89C8\u5668\u5B89\u5168",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:168863771e4,contributors:[{name:"rhys.zhao",email:"rhys.zhao@cloudwise.com",commits:1}]},filePathRelative:"senior/security.md"};export{e as data};
