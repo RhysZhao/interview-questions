@@ -2,7 +2,7 @@
  * Author  rhys.zhao
  * Date  2023-07-06 15:47:11
  * LastEditors  rhys.zhao
- * LastEditTime  2023-07-07 14:18:41
+ * LastEditTime  2023-07-11 20:12:56
  * Description
 -->
 
@@ -68,4 +68,16 @@ HTTP/3 中的 QUIC 协议集合了以下几点功能:
 
 ### 强缓存
 
+from disk cache 与 from memory cache 区别
+
+Cache-Control 优先级更高
+Exipires
+
+可以起一个服务来测试。live-server。百度的 logo 图片就是强缓存。
+
 ## 协商缓存
+
+304
+会发送请求给服务器。
+根据服务器返回的信息来决定是否使用缓存。
+根据 Last-Modified 和 If-Modified-Since 来确认是否使用缓存。
