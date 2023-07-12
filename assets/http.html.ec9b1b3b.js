@@ -1,1 +1,0 @@
-const t={key:"v-5cbc252b",path:"/senior/http.html",title:"HTTP",lang:"zh-CN",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:168863771e4,contributors:[{name:"rhys.zhao",email:"rhys.zhao@cloudwise.com",commits:1}]},filePathRelative:"senior/http.md"};export{t as data};
