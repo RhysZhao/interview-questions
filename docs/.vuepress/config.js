@@ -2,14 +2,14 @@
  * Author  rhys.zhao
  * Date  2023-03-02 14:02:43
  * LastEditors  rhys.zhao
- * LastEditTime  2023-07-07 09:16:40
+ * LastEditTime  2023-07-13 09:44:17
  * Description
  */
 
 module.exports = {
   base: '/interview-questions/',
   lang: 'zh-CN',
-  head: [['link', { rel: 'icon', href: '/imgs/favicon.ico' }]],
+  head: [['link', { rel: 'icon', href: '/interview-questions/imgs/favicon.ico' }]],
   title: '前端知识点',
   description: '前端知识点整理',
 
