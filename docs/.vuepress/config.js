@@ -2,7 +2,7 @@
  * Author  rhys.zhao
  * Date  2023-03-02 14:02:43
  * LastEditors  rhys.zhao
- * LastEditTime  2023-07-25 19:25:06
+ * LastEditTime  2023-07-27 11:14:15
  * Description
  */
 
@@ -71,14 +71,15 @@ module.exports = {
             '/senior/performance.md',
             '/senior/v8.md',
             '/senior/http.md',
-            '/senior/security.md'
+            '/senior/security.md',
+            '/senior/utils.md'
           ]
         }
       ],
       '/skill/': [
         {
           text: '学习 / 面试技巧',
-          children: ['/skill/README.md', '/skill/study.md', '/skill/interview.md', '/skill/utils.md']
+          children: ['/skill/README.md', '/skill/study.md', '/skill/interview.md']
         }
       ]
     }

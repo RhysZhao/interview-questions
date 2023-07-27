@@ -2,7 +2,7 @@
  * Author  rhys.zhao
  * Date  2023-07-25 19:24:11
  * LastEditors  rhys.zhao
- * LastEditTime  2023-07-26 20:15:33
+ * LastEditTime  2023-07-27 11:17:09
  * Description
 -->
 
@@ -65,6 +65,8 @@ commitlint
 
 高性能 Web 静态资源服务器。一般情况下，前端打包后的静态文件都是通过 Nginx 开启 Web 服务的。
 
+![](../images/utils/nginx.jpg)
+
 - Docker
 
 1. 什么是 Docker
@@ -72,6 +74,8 @@ commitlint
 Docker 是一种开源的容器化平台，它允许开发者将应用程序及其所有依赖项打包成一个独立的、标准化的容器。这个容器可以在任何支持 Docker 的环境中运行，无论是开发者的本地计算机、测试服务器，还是生产服务器，都可以保持一致的运行环境。
 
 可以简单理解为 Docker 是轻量的虚拟机，虚拟机里面是应用程序/服务。
+
+![](../images/utils/docker.jpg)
 
 2. 为什么不直接用 Nginx 部署
 
