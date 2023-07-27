@@ -2,7 +2,7 @@
  * Author  rhys.zhao
  * Date  2023-07-25 19:24:11
  * LastEditors  rhys.zhao
- * LastEditTime  2023-07-27 11:17:09
+ * LastEditTime  2023-07-27 16:26:12
  * Description
 -->
 
@@ -119,9 +119,15 @@ i. **多集群管理：** Kubernetes 支持多集群管理，可以同时管理�
 
 ## SSR
 
+优点：
+
 更好的 SEO
 
 更快的首屏渲染(不能交互)。
+
+缺点：
+
+更慢的可交互时间。
 
 - Next.js
 
@@ -139,7 +145,7 @@ i. **多集群管理：** Kubernetes 支持多集群管理，可以同时管理�
 
 - Jest
 
-JavaScript 测试框架
+JavaScript 测试框架。可以配合 Enzyme 来测试组件。
 
 - Vitest
 
@@ -167,9 +173,9 @@ JavaScript 测试框架
 
 2. qiankun：一个基于 single-spa 的微前端解决方案，由蚂蚁金服开源。
 
-3. Piral：一个用于微前端的框架，提供了强大的插件系统和自定义能力。
+3. Micro App：京东出品，基于 Web Component 的微前端框架。
 
-4. 无界：基于 WebComponent 容器 + iframe 沙箱的微前端框架
+4. 无界：腾讯出品，基于 WebComponent 容器 + iframe 沙箱的微前端框架
 
 这些微前端框架和工具提供了一种简单、灵活的方式来实现微前端架构，并支持不同技术栈和团队之间的独立开发和部署。选择合适的微前端框架取决于具体的项目需求和团队技术栈。
 
