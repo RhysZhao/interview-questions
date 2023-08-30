@@ -2,7 +2,7 @@
  * Author  rhys.zhao
  * Date  2023-03-02 14:02:43
  * LastEditors  rhys.zhao
- * LastEditTime  2023-07-27 11:14:15
+ * LastEditTime  2023-08-30 19:27:10
  * Description
  */
 
@@ -72,7 +72,8 @@ module.exports = {
             '/senior/v8.md',
             '/senior/http.md',
             '/senior/security.md',
-            '/senior/utils.md'
+            '/senior/utils.md',
+            '/senior/patch.md'
           ]
         }
       ],

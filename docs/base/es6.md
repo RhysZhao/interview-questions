@@ -2,7 +2,7 @@
  * Author  rhys.zhao
  * Date  ## 2023-03-30 09:21:24
  * LastEditors  rhys.zhao
- * LastEditTime  2023-04-17 18:40:33
+ * LastEditTime  2023-07-31 15:25:29
  * Description
 -->
 
@@ -79,6 +79,8 @@ Promise 是异步编程的一种解决方案。常用来封装一个异步操作
 2. 一旦状态改变（从 pending 变为 fulfilled 和从 pending 变为 rejected），就不会再变，任何时候都可以得到这个结果
 
 异常穿透：异常会一直向后传递，直到捕获为止。
+
+可以通过返回一个 Pending 的 Promise 来中断 Promise 链
 
 最常用的就是封装 ajax 请求，我们常用的 axios 库就是基于 Promise 封装的 ajax
 

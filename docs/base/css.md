@@ -2,7 +2,7 @@
  * Author  rhys.zhao
  * Date  2023-03-29 15:48:33
  * LastEditors  rhys.zhao
- * LastEditTime  2023-04-18 15:52:56
+ * LastEditTime  2023-08-21 09:54:54
  * Description
 -->
 
@@ -92,6 +92,7 @@ PPI（Pixels Per Inch）是指每英寸的像素数量，是设备像素密度�
 
 3. `opacity: 0`
    该元素依然存在，但是完全透明
+
 4. `position: absolute; left: -99999px;`
    该元素依然存在，只不过在页面里不可见。
 
@@ -99,7 +100,7 @@ PPI（Pixels Per Inch）是指每英寸的像素数量，是设备像素密度�
 
 BFC 即块级格式化上下文。一个 BFC 就是一个独立的空间，空间内的子元素与外面的布局互不干扰。
 
-同一个 BFC 中的元素会出现 margin 重叠的现象。解决办法就是将出现 margin 重叠的元素创造成 BFC.
+同一个 BFC 中的元素会出现 margin 重叠的现象。解决办法就是将出现 margin 重叠的元素各自放到一个 BFC.
 
 触发 BFC 的情况：
 
@@ -209,6 +210,8 @@ BFC 即块级格式化上下文。一个 BFC 就是一个独立的空间，空�
 3. 尽量使用 transform 和 opacity 属性来代替 top、left、width、height 等属性的操作；
 4. 避免频繁读取计算样式，可以把需要用到的属性缓存起来；
 5. 避免频繁操作需要回流的元素，可以使用 position: absolute 或 fixed 来脱离文档流。
+
+回流一定会触发重绘，重绘不一定触发回流。
 
 ## 9. 什么是响应式设计？响应式设计的基本原理是什么？如何做？
 
@@ -421,6 +424,45 @@ $primary-color: #409eff;
 }
 ```
 
-```
+## 17. 为什么有时候用 translate 来改变位置，而不是通过定位?
 
-```
+使用 translate 来改变位置，是出于性能的考虑。
+
+translate 是 transform 的一个属性。transform 是合成属性，不会触发重排和重绘，只会触发合成。因此可以使用 transform 来创建平滑的动画。
+
+而定位则会触发重新布局，进而重排、重绘以及合成。性能更差一些。
+
+## 18. link 与@import 的区别
+
+@import 引入的样式，会在页面加载完毕后被加载，容易出现闪屏的问题。因此不建议使用@import.
+
+## 19. flex 属性是哪三个属性缩写，有什么用？
+
+flex 是 flex-grow, flex-shrink, flex-basis 的缩写。
+
+flex-grow 用来根据权重评分剩余空间。
+
+flex-shrink 用来根据权重缩小，处理父盒子溢出的问题。
+
+flex-basis 是盒子的大小。
+
+几个属性优先级关系：
+
+max-width/min-width > flex-basis > width > box
+
+## 20. css 性能优化
+
+- 删除无用 css
+- 合并和压缩 css
+- 使用精灵图
+- 避免使用@import
+- 减少重排和重绘：避免不了可以脱离文档流，避免整个文档的重排和重绘
+
+## 21. css 工程化
+
+- 使用 sass 或者 less 预处理语言
+- 使用变量来统一管理样式变量
+- 使用 mixin 来复用同样的样式代码
+- 使用 stylelint 来统一样式规范，尤其是样式顺序
+- 使用 css Module，避免样式冲突
+- 使用 webpack 等打包工具，合并、压缩 css
